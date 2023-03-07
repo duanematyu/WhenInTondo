@@ -13,26 +13,54 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private bool facingRight= true;
     private bool isJumping= false;
-    private bool isGrounded;
+    public bool isGrounded;
     public bool isCrouching, isLookingUp, isLookingDown, isLookingStraight;
 
     private float moveDirection, constantMoveSpeed;
+
+    public float airFrictionForce;
 
     Vector3 oldRotation;
     Vector2 direction;
 
     public GameObject bulletPos;
 
+    public float dashSpeed;
+
+    public float dashLength = .5f, dashCooldown = 1f;
+
+    private float dashCounter, dashCoolCounter;
+
+    public bool isMoving;
+
+    private TrailRenderer trailRenderer;
+
+    private Vector2 dashingDir;
+
+    /* [Header("Dashing")]
+     private TrailRenderer trailRenderer;
+     [SerializeField] private float dashingVel = 30f;
+     [SerializeField] private float dashingTime = .5f;
+
+     private bool isDashing;
+     private bool canDash = true;*/
+
+
     WeaponController weaponC;
     private void Awake()
     {
         isLookingStraight = true;
         rb = GetComponent<Rigidbody2D>();
-        weaponC = bulletPos.GetComponent<WeaponController>();
-        constantMoveSpeed = moveSpeed;
+        weaponC = bulletPos.GetComponent<WeaponController>();  
     }
 
- 
+    private void Start()
+    {
+        constantMoveSpeed = moveSpeed;
+        trailRenderer = GetComponent<TrailRenderer>();
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -41,22 +69,57 @@ public class PlayerMovement : MonoBehaviour
         Crouch();
         LookUp();
         TargetDown();
+
+        if (Input.GetButtonDown("Dash") && isMoving && isGrounded)
+        {
+            if (dashCoolCounter <= 0 && dashCounter <= 0)
+            {
+                trailRenderer.emitting = true;
+                Physics2D.IgnoreLayerCollision(0, 6, true);
+
+                constantMoveSpeed = dashSpeed;
+                dashCounter = dashLength;
+            }
+        }
+
+        if (dashCounter > 0)
+        {
+            dashCounter -= Time.deltaTime;
+
+            if (dashCounter <= 0)
+            {
+                constantMoveSpeed = 5;
+                dashCoolCounter = dashCooldown;
+            }
+        }
+
+        if (dashCoolCounter > 0)
+        {
+            dashCoolCounter -= Time.deltaTime;
+            trailRenderer.emitting = false;
+            Physics2D.IgnoreLayerCollision(0, 6, false);
+        }
     }
 
     private void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundObject);
-
         Movement();
     }
+
 
     private void Movement()
     {
         rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
+        isMoving = true;
 
-        if(isJumping)
+        if (moveDirection == 0)
         {
-            //rb.AddForce(new Vector2(0f, jumpForce));
+            isMoving = false;
+        }
+
+        if (isJumping)
+        {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
         isJumping = false;
@@ -97,9 +160,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if ((Input.GetAxis("Vertical") > 0))
         {
-            /*oldRotation = transform.eulerAngles;
-            weaponC.firePoint.transform.eulerAngles = new Vector3(0, 0, 90f);
-            weaponC.firePoint.transform.eulerAngles = new Vector3(0, 0, 90f);*/
             playerAnim.SetBool("isLookingUp", true);
             isLookingUp = true;
             isLookingStraight = false;
@@ -107,8 +167,6 @@ public class PlayerMovement : MonoBehaviour
 
         if ((Input.GetAxis("Vertical") == 0))
         {
-            /*weaponC.firePoint.transform.eulerAngles = oldRotation;
-            weaponC.firePoint.transform.eulerAngles = oldRotation;*/
             playerAnim.SetBool("isLookingUp", false);
             isLookingUp = false;
             isLookingStraight = true;
@@ -136,16 +194,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") < 0 && !isGrounded)
         {
-            /*oldRotation = transform.eulerAngles;
-           weaponC.firePoint.transform.eulerAngles = new Vector3(0, 0, -90f);*/
             isLookingDown = true;
             isLookingStraight = false;
         }
 
         if (Input.GetAxis("Vertical") == 0 && isGrounded)
         {
-             /*weaponC.firePoint.transform.eulerAngles = oldRotation;
-            weaponC.firePoint.transform.eulerAngles = oldRotation;*/
             isLookingDown = false;
             isLookingStraight = true;
         }

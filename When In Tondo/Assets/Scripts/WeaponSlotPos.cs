@@ -5,14 +5,11 @@ using UnityEngine;
 public class WeaponSlotPos : MonoBehaviour
 {
     PlayerMovement player;
-    WeaponController weaponC;
-    public GameObject bulletPos;
     [SerializeField] Vector2 standPos, crouchPos, lookingUp, lookingDown;
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponentInParent<PlayerMovement>();
-        weaponC = GetComponent<WeaponController>();
         standPos = transform.localPosition;
     }
 
@@ -24,17 +21,7 @@ public class WeaponSlotPos : MonoBehaviour
             transform.localPosition = crouchPos;
         }
 
-        if (player.isLookingUp)
-        {
-            transform.localPosition = lookingUp;
-        }
-
-        if (player.isLookingDown)
-        {
-            transform.localPosition = lookingDown;
-        }
-
-        if(!player.isCrouching && !player.isLookingUp && !player.isLookingDown)
+        if(!player.isCrouching)
         {
             transform.localPosition = standPos;
             //weaponC.constant = bulletPos.transform;
