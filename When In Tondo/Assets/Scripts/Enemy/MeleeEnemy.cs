@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeEnemy : MonoBehaviour
+public class MeleeEnemy : EnemyStats
 {
     private Transform player;
     public float speed;
@@ -12,6 +12,7 @@ public class MeleeEnemy : MonoBehaviour
     private bool isInAttackRange;
     public SpriteRenderer renderer;
     public bool facingRight = false;
+    PlayerHealth playerHealth;
 
     public LayerMask playerLayerMask;
     // Start is called before the first frame update
@@ -19,6 +20,7 @@ public class MeleeEnemy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         renderer = GetComponent<SpriteRenderer>();
+        playerHealth = player.GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
@@ -33,12 +35,16 @@ public class MeleeEnemy : MonoBehaviour
             Follow();
         }
 
-        if (isInAttackRange)
+        if (Vector2.Distance(transform.position, player.position) < attackRange)
         {
-            Debug.Log("in range");
+            isInAttackRange = true;
             Attack();
         }
-     
+
+        if (Vector2.Distance(transform.position, player.position) > attackRange)
+        {
+            isInAttackRange = false;
+        }
 
         if (player.position.x < transform.position.x)
         {
@@ -80,6 +86,7 @@ public class MeleeEnemy : MonoBehaviour
     void Attack()
     {
         Debug.Log("Attacking player");
+        playerHealth.TakeDamage(baseAttack);
     }
 
     void Follow()
