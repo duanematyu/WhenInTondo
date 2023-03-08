@@ -9,8 +9,11 @@ public class MeleeEnemy : MonoBehaviour
     public bool isInRange = false;
     public float playerInRange;
     public float attackRange;
+    private bool isInAttackRange;
     public SpriteRenderer renderer;
     public bool facingRight = false;
+
+    public LayerMask playerLayerMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +24,19 @@ public class MeleeEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isInAttackRange = Physics2D.OverlapCircle(transform.position, attackRange, playerLayerMask);
+
         Vector3 scale = transform.localScale;
 
         if(isInRange)
         {
             Follow();
+        }
+
+        if (isInAttackRange)
+        {
+            Debug.Log("in range");
+            Attack();
         }
      
 
@@ -74,5 +85,11 @@ public class MeleeEnemy : MonoBehaviour
     void Follow()
     {
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), speed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(this.transform.position, attackRange);
     }
 }

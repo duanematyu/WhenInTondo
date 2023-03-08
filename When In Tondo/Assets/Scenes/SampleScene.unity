@@ -1345,8 +1345,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 246820475}
     - target: {fileID: 1308591732, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
+      propertyPath: attackRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308591732, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
       propertyPath: playerInRange
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308591732, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
+      propertyPath: playerLayerMask.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 4022018106348679005, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
       propertyPath: m_Size.x
