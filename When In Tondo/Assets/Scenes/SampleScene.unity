@@ -1317,8 +1317,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 246820482, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
+      propertyPath: health
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 246820482, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
       propertyPath: enemyName
-      value: Mananaga
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 246820482, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
+      propertyPath: baseAttack
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1308591732, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
       propertyPath: health
