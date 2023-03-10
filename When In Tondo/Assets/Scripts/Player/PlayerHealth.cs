@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField]
-    private float maxHealth = 100f;
+    private int maxHealth = 100;
     [SerializeField]
     private float currentHealth;
     //public PlayerScript player;
@@ -13,9 +14,9 @@ public class PlayerHealth : MonoBehaviour
 
     public float waitTime = 2f;
 
-    //public Slider HealthSlider;
+    public Slider HealthSlider;
 
-    //public HealthBar healthBar;
+    public HealthBar healthBar;
 
     //public GameObject GameOverScreen;
     //public GameObject HealthHud;
@@ -26,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        //healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetMaxHealth(maxHealth);
         //player = gameObject.GetComponent<PlayerScript>();
     }
 
@@ -48,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
             //gunScript.enabled = false;
         }
 
-        //HealthSlider.value = currentHealth;
+        HealthSlider.value = currentHealth;
     }
 
     public void TakeDamage(float amount)
@@ -61,6 +62,6 @@ public class PlayerHealth : MonoBehaviour
     {
         //animator.SetBool("isDead", true);
         isDead = true;
-        GetComponent<Collider2D>().enabled = false;
+        Destroy(gameObject);
     }
 }

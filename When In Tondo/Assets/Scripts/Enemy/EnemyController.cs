@@ -17,31 +17,35 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.position.x < transform.position.x)
+        if(player != null)
         {
-            if (player.localScale.x == -1)
+            if (player.position.x < transform.position.x)
             {
-                TurnAround();
+                if (player.localScale.x == -1)
+                {
+                    TurnAround();
+                }
+            }
+
+            if (player.position.x > transform.position.x)
+            {
+                if (player.localScale.x == 1)
+                {
+                    TurnAround();
+                }
+            }
+
+            if (Vector2.Distance(transform.position, player.position) < playerInRange)
+            {
+                isInRange = true;
+            }
+
+            if (Vector2.Distance(transform.position, player.position) > playerInRange)
+            {
+                isInRange = false;
             }
         }
-
-        if (player.position.x > transform.position.x)
-        {
-            if (player.localScale.x == 1)
-            {
-                TurnAround();
-            }
-        }
-
-        if(Vector2.Distance(transform.position,player.position) < playerInRange)
-        {
-            isInRange = true;
-        }
-
-        if (Vector2.Distance(transform.position, player.position) > playerInRange)
-        {
-            isInRange = false;
-        }
+       
     }
 
     void TurnAround()

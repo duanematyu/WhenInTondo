@@ -9,24 +9,36 @@ public class WeaponController : MonoBehaviour
     public GameObject bomb;
     public Transform weapon;
 
+    public float playerRange;
     public float fireRate, shotCounter, throwSpeed, shotSpeed, throwCounter;
     public bool isFiring, isThrowing;
+    private bool isInMeleeRange;
+    public LayerMask enemyLayerMask;
 
     PlayerMovement playerMovement;
+
+    public float playerDamage;
 
     // Start is called before the first frame update
     void Start()
     {
+       
         playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        isInMeleeRange = Physics2D.OverlapCircle(transform.position, playerRange, enemyLayerMask);
+        if (Input.GetButtonDown("Fire1"))
         {
             shotCounter -= Time.deltaTime;
-            if (shotCounter <= 0)
+            if (isInMeleeRange)
+            {
+                MeleeAttack();
+            }
+            
+            else if (shotCounter <= 0)
             {
                 shotCounter = fireRate;
                 Shoot();
@@ -55,6 +67,11 @@ public class WeaponController : MonoBehaviour
         {
             throwCounter = 0;
         }
+    }
+
+    void MeleeAttack()
+    {
+        Debug.Log("Attack melee");
     }
 
     void Shoot()
@@ -130,5 +147,11 @@ public class WeaponController : MonoBehaviour
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(this.transform.position, playerRange);
     }
 }

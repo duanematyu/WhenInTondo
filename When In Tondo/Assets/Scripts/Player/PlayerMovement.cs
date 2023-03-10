@@ -20,9 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float airFrictionForce;
 
-    Vector3 oldRotation;
-    Vector2 direction;
-
     public GameObject bulletPos;
 
     public float dashSpeed;

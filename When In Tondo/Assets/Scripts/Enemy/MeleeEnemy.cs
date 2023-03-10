@@ -14,6 +14,9 @@ public class MeleeEnemy : EnemyStats
     public bool facingRight = false;
     PlayerHealth playerHealth;
 
+    private float canAttack = 0f;
+    private float attackSpeed = .5f;
+
     public LayerMask playerLayerMask;
     // Start is called before the first frame update
     void Start()
@@ -26,74 +29,93 @@ public class MeleeEnemy : EnemyStats
     // Update is called once per frame
     void Update()
     {
-        isInAttackRange = Physics2D.OverlapCircle(transform.position, attackRange, playerLayerMask);
-
-        Vector3 scale = transform.localScale;
-
-        if(isInRange)
+        if (player != null)
         {
-            Follow();
-        }
+            isInAttackRange = Physics2D.OverlapCircle(transform.position, attackRange, playerLayerMask);
 
-        if (Vector2.Distance(transform.position, player.position) < attackRange)
-        {
-            isInAttackRange = true;
-            Attack();
-        }
+            Vector3 scale = transform.localScale;
 
-        if (Vector2.Distance(transform.position, player.position) > attackRange)
-        {
-            isInAttackRange = false;
-        }
-
-        if (player.position.x < transform.position.x)
-        {
-            renderer.flipX = true;
-            if (player.localScale.x == -1)
+            if (isInRange)
             {
-                TurnAround();
+                Follow();
+            }
+
+            if (Vector2.Distance(transform.position, player.position) < attackRange && player != null)
+            {
+                isInAttackRange = true;
+                Attack();
+            }
+
+            if (Vector2.Distance(transform.position, player.position) > attackRange)
+            {
+                isInAttackRange = false;
+            }
+
+            if (player.position.x < transform.position.x)
+            {
+                renderer.flipX = true;
+                if (player.localScale.x == -1)
+                {
+                    TurnAround();
+                }
+            }
+
+            if (player.position.x > transform.position.x)
+            {
+                renderer.flipX = false;
+                if (player.localScale.x == 1)
+                {
+                    TurnAround();
+                }
+            }
+
+            transform.localScale = scale;
+
+            if (Vector2.Distance(transform.position, player.position) < playerInRange)
+            {
+                isInRange = true;
+            }
+
+            if (Vector2.Distance(transform.position, player.position) > playerInRange)
+            {
+                isInRange = false;
             }
         }
-
-        if (player.position.x > transform.position.x)
-        {
-            renderer.flipX = false;
-            if (player.localScale.x == 1)
-            {
-                TurnAround();
-            }
-        }
-
-        transform.localScale = scale;
-
-        if (Vector2.Distance(transform.position, player.position) < playerInRange)
-        {
-            isInRange = true;
-        }
-
-        if (Vector2.Distance(transform.position, player.position) > playerInRange)
-        {
-            isInRange = false;
-        }
+        
     }
 
     void TurnAround()
     {
         float vecToTarget = player.transform.position.x - transform.position.x;
-        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(vecToTarget), transform.localScale.y, transform.localScale.z);
+        if (player != null)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(vecToTarget), transform.localScale.y, transform.localScale.z);
+        }
     }
 
     void Attack()
     {
         Debug.Log("Attacking player");
-        playerHealth.TakeDamage(baseAttack);
+        if(attackSpeed <= canAttack)
+        {
+           playerHealth.TakeDamage(baseAttack);
+            canAttack = 0f;
+        }
+
+        else
+        {
+            canAttack += Time.deltaTime;
+        }
     }
 
     void Follow()
     {
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), speed * Time.deltaTime);
+        if (player != null)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), speed * Time.deltaTime);
+        }
     }
-
+           
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
