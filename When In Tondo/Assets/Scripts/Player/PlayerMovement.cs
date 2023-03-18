@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isMoving;
 
+    public bool isInvulnerable;
+
     private TrailRenderer trailRenderer;
 
     private Vector2 dashingDir;
@@ -72,7 +74,8 @@ public class PlayerMovement : MonoBehaviour
             if (dashCoolCounter <= 0 && dashCounter <= 0)
             {
                 trailRenderer.emitting = true;
-                Physics2D.IgnoreLayerCollision(0, 6, true);
+                Physics2D.IgnoreLayerCollision(7, 9, true);
+                isInvulnerable = true;
 
                 constantMoveSpeed = dashSpeed;
                 dashCounter = dashLength;
@@ -85,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (dashCounter <= 0)
             {
+                Physics2D.IgnoreLayerCollision(7, 9, false);
+                isInvulnerable = false;
                 constantMoveSpeed = 5;
                 dashCoolCounter = dashCooldown;
             }
@@ -94,7 +99,6 @@ public class PlayerMovement : MonoBehaviour
         {
             dashCoolCounter -= Time.deltaTime;
             trailRenderer.emitting = false;
-            Physics2D.IgnoreLayerCollision(0, 6, false);
         }
     }
 

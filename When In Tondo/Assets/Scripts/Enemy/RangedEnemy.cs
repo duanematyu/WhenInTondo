@@ -8,15 +8,17 @@ public class RangedEnemy : MonoBehaviour
     public GameObject bullet;
     float timeBetween;
     public float startTimeBetween;
+    public float retreatDistance;
+    public float speed;
 
     EnemyController enemyController;
 
     PlayerHealth playerHealth;
-    GameObject player;
+    Transform player;
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerHealth = player.GetComponent<PlayerHealth>();
         enemyController = GetComponentInChildren<EnemyController>();
         timeBetween = startTimeBetween;
@@ -36,6 +38,12 @@ public class RangedEnemy : MonoBehaviour
             {
                 timeBetween -= Time.deltaTime;
             }
-        }        
+        }
+        
+        if(Vector2.Distance(transform.position, player.position) < retreatDistance)
+        {
+            Debug.Log("Go away from player");
+            transform.position = Vector2.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), -speed * Time.deltaTime);
+        }
     }
 }

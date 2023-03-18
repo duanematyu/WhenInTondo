@@ -128,6 +128,8 @@ MonoBehaviour:
   firePoint: {fileID: 8270933274382420020}
   bullet: {fileID: 6489944856967714830, guid: 72e354118de6f5248af6f817809ae363, type: 3}
   startTimeBetween: 2
+  retreatDistance: 4
+  speed: 10
 --- !u!1 &8270933274382420023
 GameObject:
   m_ObjectHideFlags: 0

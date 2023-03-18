@@ -13,6 +13,7 @@ public class MeleeEnemy : EnemyStats
     public SpriteRenderer renderer;
     public bool facingRight = false;
     PlayerHealth playerHealth;
+    PlayerMovement playerMovement;
 
     private float canAttack = 0f;
     private float attackSpeed = .5f;
@@ -24,6 +25,7 @@ public class MeleeEnemy : EnemyStats
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         renderer = GetComponent<SpriteRenderer>();
         playerHealth = player.GetComponent<PlayerHealth>();
+        playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -96,7 +98,7 @@ public class MeleeEnemy : EnemyStats
     void Attack()
     {
         Debug.Log("Attacking player");
-        if(attackSpeed <= canAttack)
+        if(attackSpeed <= canAttack && !playerHealth.isInvulnerable && !playerMovement.isInvulnerable)
         {
            playerHealth.TakeDamage(baseAttack);
             canAttack = 0f;

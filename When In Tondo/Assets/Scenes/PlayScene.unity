@@ -365,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.113475, y: -0.6100024, z: -10}
+  m_LocalPosition: {x: -6.1133385, y: -0.6100024, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -706,6 +706,7 @@ MonoBehaviour:
   dashLength: 0.35
   dashCooldown: 1
   isMoving: 0
+  isInvulnerable: 0
 --- !u!96 &860548495
 TrailRenderer:
   serializedVersion: 2
@@ -817,12 +818,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0daf1125e673fd44999835f3d4d59831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 500
   currentHealth: 0
   animator: {fileID: 0}
   waitTime: 2
   HealthSlider: {fileID: 2055082241}
   healthBar: {fileID: 2055082242}
+  iFramesDuration: 1
+  numberOfFlashes: 3
+  isInvulnerable: 0
   isDead: 0
 --- !u!1 &927358253
 GameObject:
@@ -885,7 +889,8 @@ MonoBehaviour:
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  playerDamage: 0
+  playerDamage: 150
+  enemy: {fileID: 0}
 --- !u!114 &927358256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +920,32 @@ MonoBehaviour:
   crouchPos: {x: 0.05680001, y: -0.033}
   lookingUp: {x: 0, y: 0}
   lookingDown: {x: 0, y: 0}
+--- !u!1 &1221510556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8270933274345775837, guid: dab57b1c982db8d4185da62ee0e57a6f, type: 3}
+  m_PrefabInstance: {fileID: 1859834343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &1221510561
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221510556}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1403694319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,7 +1262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561056985}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.113475, y: -0.6100024, z: -10}
+  m_LocalPosition: {x: -6.1133385, y: -0.6100024, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1503,6 +1534,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8270933274345775833, guid: dab57b1c982db8d4185da62ee0e57a6f, type: 3}
+      propertyPath: speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8270933274345775833, guid: dab57b1c982db8d4185da62ee0e57a6f, type: 3}
+      propertyPath: retreatDistance
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8270933274345775835, guid: dab57b1c982db8d4185da62ee0e57a6f, type: 3}
       propertyPath: m_RootOrder
       value: 6

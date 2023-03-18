@@ -18,6 +18,12 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    [Header ("IFrames")]
+    [SerializeField] private float iFramesDuration;
+    [SerializeField] private int numberOfFlashes;
+    private SpriteRenderer spriteRend;
+    public bool isInvulnerable;
+
     //public GameObject GameOverScreen;
     //public GameObject HealthHud;
 
@@ -28,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        spriteRend = GetComponent<SpriteRenderer>();
         //player = gameObject.GetComponent<PlayerScript>();
     }
 
@@ -56,6 +63,7 @@ public class PlayerHealth : MonoBehaviour
     {
         //animator.SetTrigger("isHurt");
         currentHealth -= amount;
+        StartCoroutine(Invulnerability());
     }
 
     public void Die()
@@ -63,5 +71,21 @@ public class PlayerHealth : MonoBehaviour
         //animator.SetBool("isDead", true);
         isDead = true;
         Destroy(gameObject);
+    }
+
+    private IEnumerator Invulnerability()
+    {
+        Physics2D.IgnoreLayerCollision(7, 9, true);
+
+        for (int i = 0; i < numberOfFlashes; i++)
+        {
+            isInvulnerable = true;
+            spriteRend.color = new Color(1, 0, 0, 0.5f);
+            yield return new WaitForSeconds(1);
+            spriteRend.color = Color.white;
+            yield return new WaitForSeconds(1);
+        }
+        Physics2D.IgnoreLayerCollision(7, 9, false);
+        isInvulnerable = false;
     }
 }
