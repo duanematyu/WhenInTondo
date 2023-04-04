@@ -11,7 +11,10 @@ public class PlayerMovement : MonoBehaviour
     public Animator playerAnim;
 
     private Rigidbody2D rb;
-    private bool facingRight= true;
+    public BoxCollider2D standingCollider;
+    public BoxCollider2D crouchingCollider;
+
+    public bool facingRight= true;
     private bool isJumping= false;
     public bool isGrounded;
     public bool isCrouching, isLookingUp, isLookingDown, isLookingStraight;
@@ -32,31 +35,15 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isInvulnerable;
 
-    private TrailRenderer trailRenderer;
-
-    private Vector2 dashingDir;
-
-    /* [Header("Dashing")]
-     private TrailRenderer trailRenderer;
-     [SerializeField] private float dashingVel = 30f;
-     [SerializeField] private float dashingTime = .5f;
-
-     private bool isDashing;
-     private bool canDash = true;*/
-
-
-    WeaponController weaponC;
     private void Awake()
     {
         isLookingStraight = true;
-        rb = GetComponent<Rigidbody2D>();
-        weaponC = bulletPos.GetComponent<WeaponController>();  
+        rb = GetComponent<Rigidbody2D>(); 
     }
 
     private void Start()
     {
         constantMoveSpeed = moveSpeed;
-        trailRenderer = GetComponent<TrailRenderer>();
     }
 
 
@@ -73,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (dashCoolCounter <= 0 && dashCounter <= 0)
             {
-                trailRenderer.emitting = true;
                 Physics2D.IgnoreLayerCollision(7, 9, true);
                 isInvulnerable = true;
 
@@ -98,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         if (dashCoolCounter > 0)
         {
             dashCoolCounter -= Time.deltaTime;
-            trailRenderer.emitting = false;
         }
     }
 
@@ -179,6 +164,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxis("Vertical") < 0)
         {
             playerAnim.SetBool("isCrouching", true);
+            crouchingCollider.enabled = true;
+            standingCollider.enabled = false;
             isCrouching = true;
             moveSpeed = 2f;
         }
@@ -187,6 +174,8 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnim.SetBool("isCrouching", false);
             isCrouching = false;
+            crouchingCollider.enabled = false;
+            standingCollider.enabled = true;
             moveSpeed = constantMoveSpeed;
         }
     }

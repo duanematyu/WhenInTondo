@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemy : MonoBehaviour
+public class RangedEnemy : EnemyStats
 {
     public Transform firePoint;
     public GameObject bullet;
@@ -27,6 +27,10 @@ public class RangedEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0)
+        {
+            Death();
+        }
         if (!playerHealth.isDead)
         {
             if (timeBetween <= 0 && enemyController.isInRange)
@@ -45,5 +49,10 @@ public class RangedEnemy : MonoBehaviour
             Debug.Log("Go away from player");
             transform.position = Vector2.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), -speed * Time.deltaTime);
         }
+    }
+
+    private void Death()
+    {
+        Destroy(gameObject);
     }
 }

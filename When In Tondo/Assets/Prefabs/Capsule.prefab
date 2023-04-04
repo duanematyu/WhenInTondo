@@ -101,9 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7034d7e8363381a4e83acd2ce13c9657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  enemyName: 
-  baseAttack: 0
+  health: 20
+  enemyName: Mananaga
+  baseAttack: 50
   speed: 2
   isInRange: 0
   playerInRange: 15
@@ -182,6 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5f82ed4ef7464499ed9c702cc8bba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
-  enemyName: Mantataga
-  baseAttack: 50
+  health: 0
+  enemyName: 
+  baseAttack: 0

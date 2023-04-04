@@ -5,17 +5,20 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public Transform firePoint;
+    public Transform meleePoint;
     public GameObject ammoType;
     public GameObject bomb;
     public Transform weapon;
+    public Transform throwPoint;
 
-    public float playerRange;
-    public float fireRate, shotCounter, throwSpeed, shotSpeed, throwCounter;
+    public float fireRate, shotCounter, throwSpeed, shotSpeed, throwCounter, force;
     public bool isFiring, isThrowing;
     private bool isInMeleeRange;
+    public float playerMeleeRange = 0.5f;
     public LayerMask enemyLayerMask;
 
     PlayerMovement playerMovement;
+    public GrenadeController grenadeController;
 
     public int playerDamage;
 
@@ -34,7 +37,7 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isInMeleeRange = Physics2D.OverlapCircle(transform.position, playerRange, enemyLayerMask);
+        isInMeleeRange = Physics2D.OverlapCircle(transform.position, playerMeleeRange, enemyLayerMask);
         if (Input.GetButtonDown("Fire1"))
         {
             shotCounter -= Time.deltaTime;
@@ -56,28 +59,10 @@ public class WeaponController : MonoBehaviour
             shotCounter = 0;
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if(Input.GetButtonDown("Fire2"))
         {
-            throwCounter -= Time.deltaTime;
-            if (throwCounter <= 0)
-            {
-                throwCounter = fireRate;
-                Throw();
-                isThrowing = true;
-            }
-            isThrowing = false;
+           Instantiate(grenadeController, throwPoint.position, transform.rotation);
         }
-
-        else
-        {
-            throwCounter = 0;
-        }
-    }
-
-    void MeleeAttack()
-    {
-        Debug.Log("Attack melee");
-        enemyStats.TakeDamage(playerDamage);
     }
 
     void Shoot()
@@ -117,46 +102,28 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    void Throw()
-    {
-        int playerDir()
-        {
-            if (transform.parent.localScale.x < 0f)
-            {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-        GameObject grenade = Instantiate(bomb, firePoint.position, transform.rotation);
-        Rigidbody2D grenadeRb = bomb.GetComponent<Rigidbody2D>();
-        grenadeRb.AddForce(firePoint.right * throwSpeed * playerDir(), ForceMode2D.Impulse);
-    }
-
+   
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
     }
 
+   
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(this.transform.position, playerRange);
+        Gizmos.DrawWireSphere(this.transform.position, playerMeleeRange);
     }
 
-    public void OnCollisionEnter2D(Collision2D other)
-    {
-        GameObject collisionGameObject = other.gameObject;
 
-        if (other.gameObject.CompareTag("Enemy"))
+    void MeleeAttack()
+    {
+        Debug.Log("Player Attack");
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleePoint.position, playerMeleeRange, enemyLayerMask);
+
+        foreach(Collider2D enemy in hitEnemies)
         {
-            if (collisionGameObject.GetComponent<EnemyStats>() != null)
-            {
-                collisionGameObject.GetComponent<EnemyStats>().TakeDamage(playerDamage);
-            }
-            Destroy(gameObject);
+            enemy.GetComponent<EnemyStats>().TakeDamage(playerDamage);
         }
     }
 }

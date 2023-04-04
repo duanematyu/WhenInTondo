@@ -71,6 +71,11 @@ public class MeleeEnemy : EnemyStats
                 }
             }
 
+            if (health <= 0)
+            {
+                Death();
+            }
+
             transform.localScale = scale;
 
             if (Vector2.Distance(transform.position, player.position) < playerInRange)
@@ -117,7 +122,12 @@ public class MeleeEnemy : EnemyStats
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), speed * Time.deltaTime);
         }
     }
-           
+
+    private void Death()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Wall
+  - Molotov
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Player
   - Ground
   - Bullet
-  - 
+  - Molotov
   - 
   - 
   - 

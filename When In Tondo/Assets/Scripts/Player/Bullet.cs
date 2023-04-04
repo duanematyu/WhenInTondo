@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float bulletSpeed;
     PlayerMovement playerMovement;
+    public int damage;
 
     private Rigidbody2D bulletRb;
     // Start is called before the first frame update
@@ -21,16 +22,20 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-       // Instantiate(transform.position, Quaternion.identity);
-        if (collision.tag == "Enemy")
+        GameObject collisionGameObject = other.gameObject;
+
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
+            if (collisionGameObject.GetComponent<EnemyStats>() != null)
+            {
+                collisionGameObject.GetComponent<EnemyStats>().TakeDamage(damage);
+            }
             Destroy(gameObject);
         }
 
-        if (collision.tag == "Wall")
+        if (other.gameObject.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }
