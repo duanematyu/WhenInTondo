@@ -199,5 +199,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e9c3eac3db6b464a805507ef9e9dfb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInRange: 5
+  playerInRange: 10
   isInRange: 0

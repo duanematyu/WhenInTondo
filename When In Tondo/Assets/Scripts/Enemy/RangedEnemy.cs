@@ -43,8 +43,15 @@ public class RangedEnemy : EnemyStats
                 timeBetween -= Time.deltaTime;
             }
         }
-        
-        if(Vector2.Distance(transform.position, player.position) < retreatDistance)
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+        if (hit.collider == null)
+        {
+            Debug.Log("I'm about to fall off!");
+            return;
+        }
+
+        if (Vector2.Distance(transform.position, player.position) < retreatDistance)
         {
             Debug.Log("Go away from player");
             transform.position = Vector2.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), -speed * Time.deltaTime);

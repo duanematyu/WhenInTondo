@@ -5,38 +5,41 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public Transform firePoint;
-    public Transform meleePoint;
+    public GameObject meleePoint;
     public GameObject ammoType;
     public GameObject bomb;
     public Transform weapon;
     public Transform throwPoint;
+    Vector2 aimDirection;
 
     public float fireRate, shotCounter, throwSpeed, shotSpeed, throwCounter, force;
     public bool isFiring, isThrowing;
     private bool isInMeleeRange;
     public float playerMeleeRange = 0.5f;
     public LayerMask enemyLayerMask;
-
+    public Animator playerAnim;
     PlayerMovement playerMovement;
     public GrenadeController grenadeController;
 
     public int playerDamage;
-
-    EnemyStats enemyStats;
-
-    public GameObject[] enemy;
-
     // Start is called before the first frame update
     void Start()
     {
-        enemy = GameObject.FindGameObjectsWithTag("Enemy");
         playerMovement = GetComponentInParent<PlayerMovement>();
+        playerAnim = GetComponentInParent<Animator>();
+        meleePoint = GameObject.FindGameObjectWithTag("MeleePoint");
         //enemyStats = enemy.GetComponent<EnemyStats>();
     }
 
     // Update is called once per frame
     void Update()
     {
+       /* aimDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        if (playerMovement.isCrouching && playerMovement.isGrounded)
+        {
+            aimDirection.y = 0f;
+        }*/
+
         isInMeleeRange = Physics2D.OverlapCircle(transform.position, playerMeleeRange, enemyLayerMask);
         if (Input.GetButtonDown("Fire1"))
         {
@@ -46,7 +49,7 @@ public class WeaponController : MonoBehaviour
                 MeleeAttack();
             }
 
-            else if (shotCounter <= 0)
+           else if (shotCounter <= 0)
             {
                 shotCounter = fireRate;
                 Shoot();
@@ -67,6 +70,15 @@ public class WeaponController : MonoBehaviour
 
     void Shoot()
     {
+        /* // Calculate the angle of the aim direction in radians
+         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x);
+
+         // Instantiate a bullet prefab and set its position to the bullet spawn point
+         GameObject bullet = Instantiate(ammoType, firePoint.position, Quaternion.identity);
+
+         // Set the bullet's velocity based on the aim direction
+         bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(shotSpeed * Mathf.Cos(angle), shotSpeed * Mathf.Sin(angle));*/
+
         int playerDir()
         {
             if (transform.parent.localScale.x < 0f)
@@ -80,6 +92,7 @@ public class WeaponController : MonoBehaviour
         }
         GameObject shot = Instantiate(ammoType, firePoint.position, Quaternion.identity);
         Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
+     
 
         if (playerMovement.isLookingStraight && !playerMovement.isCrouching)
         {
@@ -90,7 +103,7 @@ public class WeaponController : MonoBehaviour
         {
             shotRb.AddForce(firePoint.right * shotSpeed * playerDir(), ForceMode2D.Impulse);
         }
-
+   
         if (playerMovement.isLookingUp)
         {
             shotRb.AddForce(firePoint.up * shotSpeed * playerDir(), ForceMode2D.Impulse);
@@ -118,12 +131,20 @@ public class WeaponController : MonoBehaviour
 
     void MeleeAttack()
     {
+        playerAnim.SetTrigger("stab");
+        StartCoroutine(ResetStab());
         Debug.Log("Player Attack");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleePoint.position, playerMeleeRange, enemyLayerMask);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleePoint.transform.position, playerMeleeRange, enemyLayerMask);
 
         foreach(Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<EnemyStats>().TakeDamage(playerDamage);
         }
+    }
+
+    IEnumerator ResetStab()
+    {
+        yield return new WaitForSeconds(1f);
+        playerAnim.ResetTrigger("stab");
     }
 }

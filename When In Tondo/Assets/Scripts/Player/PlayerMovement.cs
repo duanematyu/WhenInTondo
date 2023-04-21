@@ -23,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float airFrictionForce;
 
-    public GameObject bulletPos;
-
     public float dashSpeed;
 
     public float dashLength = .5f, dashCooldown = 1f;
@@ -98,6 +96,23 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
         isMoving = true;
+        if (isLookingUp && isMoving)
+        {
+            playerAnim.SetBool("isLookUpWalking", true);
+        }
+        else
+        {
+            playerAnim.SetBool("isLookUpWalking", false);
+        }
+
+        if (isCrouching == true)
+        {
+            playerAnim.SetBool("isCrouchWalking", true);
+        }
+        else
+        {
+            playerAnim.SetBool("isCrouchWalking", false);
+        }
 
         if (moveDirection == 0)
         {
@@ -109,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
         isJumping = false;
+        playerAnim.SetBool("isJumping", false);
         isLookingDown = false;
     }
 
@@ -133,6 +149,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             isJumping = true;
+            playerAnim.SetBool("isJumping", true);
         }
     }
 
@@ -184,12 +201,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") < 0 && !isGrounded)
         {
+            playerAnim.SetBool("isLookingDown", true);
             isLookingDown = true;
             isLookingStraight = false;
         }
 
         if (Input.GetAxis("Vertical") == 0 && isGrounded)
         {
+            playerAnim.SetBool("isLookingDown", false);
             isLookingDown = false;
             isLookingStraight = true;
         }

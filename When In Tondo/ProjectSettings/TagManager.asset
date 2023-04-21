@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Wall
   - Molotov
+  - Weapon
+  - MeleePoint
   layers:
   - Default
   - TransparentFX
