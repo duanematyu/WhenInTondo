@@ -150,3 +150,4 @@ MonoBehaviour:
   LaunchOffset: {x: 1, y: 0.5, z: 0}
   thrown: 1
   firePrefab: {fileID: 7023319678766413724, guid: 5e00a076b71aff8458384abfe5b51057, type: 3}
+  molotovCount: 10

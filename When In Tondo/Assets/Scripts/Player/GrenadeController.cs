@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GrenadeController : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class GrenadeController : MonoBehaviour
     public Vector3 LaunchOffset;
     public bool thrown;
     public GameObject firePrefab;
-
+    public int molotovCount = 10;
     private void Start()
     {
         if(thrown)
@@ -17,6 +19,7 @@ public class GrenadeController : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
         }
         transform.Translate(LaunchOffset);
+        
     }
     private void Update()
     {
