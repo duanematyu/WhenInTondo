@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class WeaponController : MonoBehaviour
 {
@@ -12,22 +14,25 @@ public class WeaponController : MonoBehaviour
     public Transform throwPoint;
     Vector2 aimDirection;
 
-    public float fireRate, shotCounter, throwSpeed, shotSpeed, throwCounter, force;
+    public float fireRate, shotCounter, throwSpeed, shotSpeed, throwCounter, force, molotovCount, currentMolotovCount;
     public bool isFiring, isThrowing;
     private bool isInMeleeRange;
     public float playerMeleeRange = 0.5f;
     public LayerMask enemyLayerMask;
     public Animator playerAnim;
-    PlayerMovement playerMovement;
+     PlayerMovement playerMovement;
     public GrenadeController grenadeController;
-
     public int playerDamage;
+
+    public TextMeshProUGUI molotovAmmo;
+
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAnim = GetComponentInParent<Animator>();
         meleePoint = GameObject.FindGameObjectWithTag("MeleePoint");
+        //molotovAmmo = GameObject.FindGameObjectWithTag("MolotovText");
         //enemyStats = enemy.GetComponent<EnemyStats>();
     }
 
@@ -62,10 +67,14 @@ public class WeaponController : MonoBehaviour
             shotCounter = 0;
         }
 
-        if(Input.GetButtonDown("Fire2"))
+        /*if(Input.GetButtonDown("Fire2"))
         {
-           Instantiate(grenadeController, throwPoint.position, transform.rotation);
-        }
+           for(int i = 0; i < molotovCount; i++)
+           {
+             Instantiate(grenadeController, throwPoint.position, transform.rotation);
+             molotovCount--;
+           }
+        } */  
     }
 
     void Shoot()

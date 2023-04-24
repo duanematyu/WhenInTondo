@@ -59,14 +59,18 @@ MonoBehaviour:
   shotSpeed: 10
   throwCounter: 0
   force: 2
+  molotovCount: 10
+  currentMolotovCount: 0
   isFiring: 0
   isThrowing: 0
   playerMeleeRange: 0.5
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  playerAnim: {fileID: 0}
   grenadeController: {fileID: -5560423344084025661, guid: af6cd5a6006c0834f87646b686f7b938, type: 3}
   playerDamage: 150
+  molotovAmmoText: {fileID: 0}
 --- !u!114 &9161195981578228268
 MonoBehaviour:
   m_ObjectHideFlags: 0

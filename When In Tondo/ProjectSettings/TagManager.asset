@@ -9,6 +9,8 @@ TagManager:
   - Molotov
   - Weapon
   - MeleePoint
+  - Text
+  - MolotovText
   layers:
   - Default
   - TransparentFX

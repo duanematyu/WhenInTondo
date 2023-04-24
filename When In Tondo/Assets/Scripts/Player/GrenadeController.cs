@@ -10,7 +10,8 @@ public class GrenadeController : MonoBehaviour
     public Vector3 LaunchOffset;
     public bool thrown;
     public GameObject firePrefab;
-    public int molotovCount = 10;
+    //public int molotovCount = 10;
+
     private void Start()
     {
         if(thrown)
@@ -18,8 +19,7 @@ public class GrenadeController : MonoBehaviour
             var direction = transform.right + Vector3.up;
             GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
         }
-        transform.Translate(LaunchOffset);
-        
+        transform.Translate(LaunchOffset);        
     }
     private void Update()
     {
