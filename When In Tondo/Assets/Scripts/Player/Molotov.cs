@@ -21,12 +21,12 @@ public class Molotov: MonoBehaviour
     {
       if(Input.GetButtonDown("Fire2"))
         {
-           for(int i = 0; i < molotovCount; i++)
+           if(molotovCount > 0)
            {
-             Instantiate(grenadeController, throwPoint.position, transform.rotation);
-             molotovCountText.text = molotovCount.ToString();
-             molotovCount--;
-           }
+                Instantiate(grenadeController, throwPoint.position, transform.rotation);
+                molotovCount--;
+                molotovCountText.text = molotovCount.ToString();
+            }
         }
     }
 }

@@ -24,8 +24,6 @@ public class WeaponController : MonoBehaviour
     public GrenadeController grenadeController;
     public int playerDamage;
 
-    public TextMeshProUGUI molotovAmmo;
-
     // Start is called before the first frame update
     void Start()
     {

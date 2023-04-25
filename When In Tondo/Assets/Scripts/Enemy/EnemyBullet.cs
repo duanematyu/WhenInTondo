@@ -7,6 +7,7 @@ public class EnemyBullet : EnemyStats
     public float speed;
     Rigidbody2D rb;
     PlayerHealth playerHealth;
+    PlayerMovement playerMovement;
     private Transform player;
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,7 @@ public class EnemyBullet : EnemyStats
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerHealth = player.GetComponent<PlayerHealth>();
+        playerMovement = player.GetComponent<PlayerMovement>();
         Vector3 direction = player.transform.position - transform.position;
         rb.velocity = new Vector2(direction.x, 0).normalized * speed;
     }
@@ -31,7 +33,7 @@ public class EnemyBullet : EnemyStats
         // Instantiate(transform.position, Quaternion.identity);
         if (player != null)
         {
-            if (collision.tag == "Player")
+            if (collision.tag == "Player" && !playerHealth.isInvulnerable && !playerMovement.isInvulnerable)
             {
                 playerHealth.TakeDamage(baseAttack);
                 Destroy(gameObject);

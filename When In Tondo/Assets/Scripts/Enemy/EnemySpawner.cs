@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public float spawnTime;
     public bool canSpawn;
 
-    public BoxCollider2D box;
+    //public BoxCollider2D box;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,10 +33,10 @@ public class EnemySpawner : MonoBehaviour
 
         }
 
-        if (enemyCount == 0)
+        /*if (enemyCount == 0)
         {
             box.enabled = false;
-        }
+        }*/
         
     }
 

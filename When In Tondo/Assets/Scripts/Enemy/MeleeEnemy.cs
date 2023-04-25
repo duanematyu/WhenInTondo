@@ -12,6 +12,8 @@ public class MeleeEnemy : EnemyStats
     private bool isInAttackRange;
     public SpriteRenderer renderer;
     public bool facingRight = false;
+    public Animator meleeEnemyAnim;
+
     PlayerHealth playerHealth;
     PlayerMovement playerMovement;
 
@@ -105,7 +107,10 @@ public class MeleeEnemy : EnemyStats
         Debug.Log("Attacking player");
         if(attackSpeed <= canAttack && !playerHealth.isInvulnerable && !playerMovement.isInvulnerable)
         {
-           playerHealth.TakeDamage(baseAttack);
+            meleeEnemyAnim.SetTrigger("Stab");
+            meleeEnemyAnim.ResetTrigger("Walk");
+            StartCoroutine(ResetStab());
+            playerHealth.TakeDamage(baseAttack);
             canAttack = 0f;
         }
 
@@ -132,5 +137,12 @@ public class MeleeEnemy : EnemyStats
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(this.transform.position, attackRange);
+    }
+
+    IEnumerator ResetStab()
+    {
+        yield return new WaitForSeconds(.2f);
+        meleeEnemyAnim.ResetTrigger("Stab");
+        meleeEnemyAnim.SetTrigger("Walk");
     }
 }

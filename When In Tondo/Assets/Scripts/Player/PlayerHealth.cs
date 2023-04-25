@@ -70,7 +70,7 @@ public class PlayerHealth : MonoBehaviour
     {
         //animator.SetBool("isDead", true);
         isDead = true;
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     private IEnumerator Invulnerability()

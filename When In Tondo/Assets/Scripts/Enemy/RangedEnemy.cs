@@ -11,6 +11,9 @@ public class RangedEnemy : EnemyStats
     public float retreatDistance;
     public float speed;
 
+    public Animator rangedEnemyAnim;
+    public SpriteRenderer renderer;
+
     EnemyController enemyController;
 
     PlayerHealth playerHealth;
@@ -33,6 +36,7 @@ public class RangedEnemy : EnemyStats
         }
         if (!playerHealth.isDead)
         {
+            rangedEnemyAnim.SetBool("isWalking", false);
             if (timeBetween <= 0 && enemyController.isInRange)
             {
                 Instantiate(bullet, firePoint.position, firePoint.rotation);
@@ -41,6 +45,24 @@ public class RangedEnemy : EnemyStats
             else
             {
                 timeBetween -= Time.deltaTime;
+            }
+        }
+
+        if (player.position.x < transform.position.x)
+        {
+            renderer.flipX = true;
+            if (player.localScale.x == -1)
+            {
+                TurnAround();
+            }
+        }
+
+        if (player.position.x > transform.position.x)
+        {
+            renderer.flipX = false;
+            if (player.localScale.x == 1)
+            {
+                TurnAround();
             }
         }
 
@@ -53,8 +75,17 @@ public class RangedEnemy : EnemyStats
 
         if (Vector2.Distance(transform.position, player.position) < retreatDistance)
         {
+            rangedEnemyAnim.SetBool("isWalking", true);
             Debug.Log("Go away from player");
             transform.position = Vector2.MoveTowards(transform.position, new Vector3(player.position.x, transform.position.y, transform.position.z), -speed * Time.deltaTime);
+        }
+    }
+    void TurnAround()
+    {
+        float vecToTarget = player.transform.position.x - transform.position.x;
+        if (player != null)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(vecToTarget), transform.localScale.y, transform.localScale.z);
         }
     }
 
