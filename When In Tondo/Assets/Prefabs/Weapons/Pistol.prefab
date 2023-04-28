@@ -70,7 +70,6 @@ MonoBehaviour:
   playerAnim: {fileID: 0}
   grenadeController: {fileID: -5560423344084025661, guid: af6cd5a6006c0834f87646b686f7b938, type: 3}
   playerDamage: 150
-  molotovAmmoText: {fileID: 0}
 --- !u!114 &9161195981578228268
 MonoBehaviour:
   m_ObjectHideFlags: 0
