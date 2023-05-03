@@ -33,11 +33,10 @@ public class GrenadeController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Wall")
         {
-            Debug.Log("Hit");
             Vector3 collisionPoint = collision.contacts[0].point;
-            Vector3 wallPosition = collision.gameObject.transform.position;
-            float yOffset = Mathf.Abs(collisionPoint.y - wallPosition.y) / .8f;
-            Instantiate(firePrefab, new Vector3(collisionPoint.x, wallPosition.y + yOffset, collisionPoint.z), Quaternion.identity);
+            Vector3 normalVector = collision.contacts[0].normal;
+            Quaternion fireRotation = Quaternion.LookRotation(Vector3.forward, normalVector);
+            Instantiate(firePrefab, collisionPoint, fireRotation);
             Destroy(GameObject.Find("groundfire(Clone)"), 2f);
         }
 

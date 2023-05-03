@@ -53,4 +53,10 @@ public class EnemyController : MonoBehaviour
         float vecToTarget = player.transform.position.x - transform.position.x;
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(vecToTarget), transform.localScale.y, transform.localScale.z);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(this.transform.position, playerInRange);
+    }
 }
