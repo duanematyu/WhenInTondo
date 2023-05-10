@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 960d1b20ab1a6f54c89aa66dbbe6e6e6
+  m_SerializeEntries:
+  - m_GUID: dab57b1c982db8d4185da62ee0e57a6f
+    m_Address: Assets/Prefabs/RangedEnemy.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 42d8aee7cb74b9e43a1e5028993e45bb, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 78dbb90640da12d4abd0d02cc5598f5b, type: 2}
+    - {fileID: 11400000, guid: c2a9b8f44b0dc3d4c98794122506e5d9, type: 2}

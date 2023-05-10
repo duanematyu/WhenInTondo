@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     {
         playerMovement = GetComponentInParent<PlayerMovement>();
         //bulletRb = GetComponent<Rigidbody2D>();
-        //bulletRb.velocity = transform.right * bulletSpeed;
+       // bulletRb.velocity = transform.right * bulletSpeed;
     }
 
     private void OnBecameInvisible()

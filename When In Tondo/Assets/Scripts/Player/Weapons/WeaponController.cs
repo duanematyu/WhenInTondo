@@ -20,7 +20,7 @@ public class WeaponController : MonoBehaviour
     public float playerMeleeRange = 0.5f;
     public LayerMask enemyLayerMask;
     public Animator playerAnim;
-     PlayerMovement playerMovement;
+    PlayerMovement playerMovement;
     public GrenadeController grenadeController;
     public int playerDamage;
 
