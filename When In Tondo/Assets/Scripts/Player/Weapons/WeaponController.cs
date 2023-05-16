@@ -23,6 +23,7 @@ public class WeaponController : MonoBehaviour
     PlayerMovement playerMovement;
     public GrenadeController grenadeController;
     public int playerDamage;
+    public int currentWeaponNum = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +64,11 @@ public class WeaponController : MonoBehaviour
         else
         {
             shotCounter = 0;
+        }
+        
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            ChangeWeapon();
         }
 
         /*if(Input.GetButtonDown("Fire2"))
@@ -153,5 +159,22 @@ public class WeaponController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         playerAnim.ResetTrigger("stab");
+    }
+
+   public void ChangeWeapon()
+    {
+        if(currentWeaponNum == 0)
+        {
+            currentWeaponNum += 1;
+            playerAnim.SetLayerWeight(currentWeaponNum - 1, 0);
+            playerAnim.SetLayerWeight(currentWeaponNum, 1);
+        }
+
+        else
+        {
+            currentWeaponNum -= 1;
+            playerAnim.SetLayerWeight(currentWeaponNum + 1, 0);
+            playerAnim.SetLayerWeight(currentWeaponNum, 1);
+        }
     }
 }

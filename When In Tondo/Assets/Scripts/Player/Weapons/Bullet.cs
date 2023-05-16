@@ -5,16 +5,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float bulletSpeed;
-    PlayerMovement playerMovement;
     public int damage;
 
     private Rigidbody2D bulletRb;
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = GetComponentInParent<PlayerMovement>();
-        //bulletRb = GetComponent<Rigidbody2D>();
-       // bulletRb.velocity = transform.right * bulletSpeed;
+
     }
 
     private void OnBecameInvisible()
