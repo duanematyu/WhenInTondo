@@ -14,6 +14,8 @@ public class MeleeEnemy : EnemyStats
     public bool facingRight = false;
     public Animator meleeEnemyAnim;
 
+    public Rigidbody2D rb;
+
     PlayerHealth playerHealth;
     PlayerMovement playerMovement;
 
@@ -137,6 +139,19 @@ public class MeleeEnemy : EnemyStats
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(this.transform.position, attackRange);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Jumpable" && isInRange)
+        {
+            rb.AddForce(Vector2.up * 450f);
+        }
+
+        else if (collision.tag == "HigherJumpable" && isInRange)
+        {
+            rb.AddForce(Vector2.up * 600f);
+        }
     }
 
     IEnumerator ResetStab()

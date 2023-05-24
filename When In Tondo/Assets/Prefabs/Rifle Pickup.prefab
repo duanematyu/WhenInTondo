@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5588917236438915129}
   - component: {fileID: 5588917236438915132}
   m_Layer: 0
-  m_Name: Shotgun Pickup
+  m_Name: Rifle Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5588917236438915128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.74, y: -1.65, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c45121237da5bbf4489c20219be60708, type: 3}
+  m_SortingOrder: 21
+  m_Sprite: {fileID: 21300000, guid: 70baa65c2ebcace41ac434c289d194ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,7 +103,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 2.1875, y: 0.8125}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -124,4 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 610349dee0cd614429399b444bdcebd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponToGive: {fileID: 5903527309012570314, guid: d492803acfdae8545b8a8789f4d48555, type: 3}
+  weaponToGive: {fileID: 4992817752621526210, guid: 79186cdf14d011c479b46325bc8fa042, type: 3}

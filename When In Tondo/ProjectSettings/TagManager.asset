@@ -12,6 +12,8 @@ TagManager:
   - Text
   - MolotovText
   - Boss
+  - Jumpable
+  - HigherJumpable
   layers:
   - Default
   - TransparentFX

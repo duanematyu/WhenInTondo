@@ -66,10 +66,10 @@ public class WeaponController : MonoBehaviour
             shotCounter = 0;
         }
         
-        if(Input.GetKeyDown(KeyCode.C))
+       /* if(Input.GetKeyDown(KeyCode.C))
         {
             ChangeWeapon();
-        }
+        }*/
 
         /*if(Input.GetButtonDown("Fire2"))
         {

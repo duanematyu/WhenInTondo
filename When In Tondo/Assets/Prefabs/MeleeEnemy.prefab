@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4022018106348679005}
   - component: {fileID: 1193292594004883780}
   - component: {fileID: 246820477}
-  - component: {fileID: 246820482}
   m_Layer: 6
   m_Name: MeleeEnemy
   m_TagString: Enemy
@@ -111,6 +110,7 @@ MonoBehaviour:
   renderer: {fileID: 7768551068239424594}
   facingRight: 0
   meleeEnemyAnim: {fileID: 246820477}
+  rb: {fileID: 1193292594004883780}
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -143,7 +143,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -171,18 +171,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &246820482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7549906029937256602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5f82ed4ef7464499ed9c702cc8bba1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  enemyName: 
-  baseAttack: 0

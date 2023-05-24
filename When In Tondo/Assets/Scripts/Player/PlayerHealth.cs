@@ -24,6 +24,8 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer spriteRend;
     public bool isInvulnerable;
 
+    public GameObject player;
+
     //public GameObject GameOverScreen;
     //public GameObject HealthHud;
 
@@ -70,6 +72,8 @@ public class PlayerHealth : MonoBehaviour
     {
         //animator.SetBool("isDead", true);
         isDead = true;
+        currentHealth = 0;
+        player.SetActive(false);
         //Destroy(gameObject);
     }
 

@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed, jumpForce, checkRadius;
 
     public Transform overheadCheck, groundCheck;
+    public GameObject player;
     public LayerMask groundObject;
     public Animator playerAnim;
 
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private float moveDirection, constantMoveSpeed;
 
     public float airFrictionForce;
+    private float outOfBounds = -6.08f;
 
     public float dashSpeed;
 
@@ -33,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isInvulnerable;
 
+    PlayerHealth playerHealth;
     private void Awake()
     {
         isLookingStraight = true;
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         constantMoveSpeed = moveSpeed;
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
 
@@ -84,6 +88,12 @@ public class PlayerMovement : MonoBehaviour
         if (dashCoolCounter > 0)
         {
             dashCoolCounter -= Time.deltaTime;
+        }
+
+        if(transform.position.y < outOfBounds)
+        {
+            playerHealth.Die();
+            player.SetActive(false);
         }
     }
 

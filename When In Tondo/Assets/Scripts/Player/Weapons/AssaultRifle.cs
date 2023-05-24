@@ -5,6 +5,7 @@ using UnityEngine;
 public class AssaultRifle : MonoBehaviour
 {
     public GameObject bulletPrefab;
+    public GameObject meleePoint;
     public Transform barrelTransform;
     public Transform barrelTransformUp;
     public float fireRate = 0.2f;
@@ -17,10 +18,25 @@ public class AssaultRifle : MonoBehaviour
 
     PlayerMovement playerMovement;
 
+    private bool isInMeleeRange;
+    public float playerMeleeRange = 0.5f;
+    public LayerMask enemyLayerMask;
+
+    public int currentWeaponNum = 0;
+    public int playerDamage;
+
+    public Animator playerAnim;
+
+    WeaponSwap weaponSwap;
+
     private void Start()
     {
+        weaponSwap = GetComponentInParent<WeaponSwap>();
+        playerAnim = GetComponentInParent<Animator>();
         currentAmmo = maxAmmo;
         playerMovement = GetComponentInParent<PlayerMovement>();
+        meleePoint = GameObject.FindGameObjectWithTag("MeleePoint");
+        ChangeWeapon();
     }
 
     private void Update()
@@ -29,10 +45,38 @@ public class AssaultRifle : MonoBehaviour
         {
             Fire();
         }
+
+        if (currentAmmo == 0)
+        {
+            weaponSwap.SwitchDefaultWeapon();
+            ChangeWeapon();
+            Destroy(transform.parent.gameObject);
+        }
+    }
+    public void ChangeWeapon()
+    {
+        if (currentWeaponNum == 0)
+        {
+            currentWeaponNum += 1;
+            playerAnim.SetLayerWeight(currentWeaponNum - 1, 0);
+            playerAnim.SetLayerWeight(currentWeaponNum, 1);
+        }
+
+        else
+        {
+            currentWeaponNum -= 1;
+            playerAnim.SetLayerWeight(currentWeaponNum + 1, 0);
+            playerAnim.SetLayerWeight(currentWeaponNum, 1);
+        }
     }
 
     private void Fire()
     {
+        isInMeleeRange = Physics2D.OverlapCircle(transform.position, playerMeleeRange, enemyLayerMask);
+        if (isInMeleeRange)
+        {
+            MeleeAttack();
+        }
         nextFireTime = Time.time + fireRate;
         currentAmmo--;
 
@@ -96,8 +140,26 @@ public class AssaultRifle : MonoBehaviour
         }
     }
 
+    void MeleeAttack()
+    {
+        playerAnim.SetTrigger("stab");
+        StartCoroutine(ResetStab());
+        Debug.Log("Player Attack");
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleePoint.transform.position, playerMeleeRange, enemyLayerMask);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<EnemyStats>().TakeDamage(playerDamage);
+        }
+    }
     private IEnumerator DelayBulletInstantiate()
     {
         yield return new WaitForSeconds(bulletDelay);
+    }
+
+    IEnumerator ResetStab()
+    {
+        yield return new WaitForSeconds(1f);
+        playerAnim.ResetTrigger("stab");
     }
 }
