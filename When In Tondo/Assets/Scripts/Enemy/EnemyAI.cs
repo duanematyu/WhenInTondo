@@ -31,8 +31,8 @@ public class EnemyAI : MonoBehaviour
 
     public void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        target = player.transform;
+        //player = GameObject.FindWithTag("Player");
+        //target = player.transform;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -73,7 +73,7 @@ public class EnemyAI : MonoBehaviour
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
 
-       /* if(jumpEnabled && isGrounded)
+       /*if(jumpEnabled && isGrounded)
         {
             if(direction.y > jumpNodeHeightRequirement)
             {
@@ -117,11 +117,11 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+   private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Jumpable" && isGrounded)
         {
-            rb.AddForce(Vector2.up * 450f);
+            rb.AddForce(Vector2.up * 550f);
         }
 
         else if (collision.tag == "HigherJumpable" && isGrounded)

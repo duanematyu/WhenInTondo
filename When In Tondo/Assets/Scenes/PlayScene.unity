@@ -27708,48 +27708,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7549906029937256602, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
   m_PrefabInstance: {fileID: 1928790714}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1895117239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895117232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
-  radius: 0.5
-  height: 2
-  canMove: 1
-  maxSpeed: 1
-  gravity: {x: NaN, y: NaN, z: NaN}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  centerOffsetCompatibility: NaN
-  repathRateCompatibility: NaN
-  canSearchCompability: 0
-  orientation: 1
-  enableRotation: 1
-  autoRepath:
-    mode: 2
-    interval: 0.5
-    sensitivity: 10
-    maximumInterval: 2
-    visualizeSensitivity: 0
-  targetCompatibility: {fileID: 0}
-  maxAcceleration: -2.5
-  rotationSpeed: 360
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 2
-  endReachedDistance: 0.2
-  alwaysDrawGizmos: 0
-  slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
-  constrainInsideGraph: 0
 --- !u!114 &1895117240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27778,6 +27736,30 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
+--- !u!114 &1895117241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895117232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2e5cde514290364280ee185f9995a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 860548487}
+  player: {fileID: 0}
+  activateDistance: 50
+  pathUpdateSeconds: 0.5
+  speed: 500
+  nextWaypointDistance: 3
+  jumpNodeHeightRequirement: 2
+  jumpModifier: 0.3
+  jumpCheckOffset: 0.1
+  followEnabled: 1
+  jumpEnabled: 1
+  directionLookEnabled: 1
 --- !u!4 &1910877151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8945072405540797355, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
@@ -27852,6 +27834,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 860548487}
+    - target: {fileID: 1308591732, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7549906029937256602, guid: 06fa122f373496445b8e6785fe350c1d, type: 3}
       propertyPath: m_Name
       value: MeleeEnemy
@@ -28306,7 +28292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAABAIezvTDQkYwIAABgFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMtymzAU/RWP1k0Gv+KmuxY7ThdOPHE62bBRpIvRWEiMHrGdjP+9VwIMpSvEOfdxztWFLyKUrYA5bdZG8I3mQH6MSDiTb6OOfIQT3Wu1E5/QxrwJ7ooQRGPMC3VCIz4OaVaX4IxgP9VehuAEQa9Erk254ntItXUW4ZxKC0gZ7UK2QuhrRE74uLkPKWc8TRbh9Imn+2R0wSMD5cB0oeNk0YTOb+dNaB3pFZO0rIAH2V3CZHatPY1xCh01IUE901IK28gh7lxFuymtrEczGMAFRXtRwxRfCxD7woVy/eTnPLfgGu+GnpfC4JTqquSXrkdXUnuohX1Q6UOfyfwuaqqLbv7jb8aRzo0uH9u+4yT0cIVghxd6ZtS63mz78LITPo7zOVJ5oO8S3gpQT3pttFccSWd8SPUWJsvu9WotLYAdOryWOgB91Q28HXd7kcHDJbo/pVKU74G6ndXATuo473j/YPBmfqPguB22KYFoUPHHwivd99eoIR6EsQ6pxqUK8t61NyGUrOLMghvvUm0URLgRXYGi0p23WMYNr3DA9doOmAcaPpimecO138EgJcJdfJIMqK0+Xi/LFvq4AVs8eyeF6hcLzBMOKtVK1StmB2zI23mTUwad2b0X/N/dIlPgwCbJjLI5JIvZ4mbKWP6dTmZ3OUA+v6ckLp9QaJTKba20mQ9em+qKK1y09kcyWhtaxXXnhh7X4rPUvZkLlesdMwDqua5wFQ4Gm+BnyVdc4IR24JxQ8cLJV0akZgfg2bVQFp2uTs7QrKuSkUp8aBeQjKTxz5GRAF+XeWvgQ8AxNG+LXcjlL1BLAwQUAAAICAAAQCHsatRauG0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0knFqSmqykYFJYrJpqoG5ibmucXJymkWikYlZWmpqmqllolIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAQCHs70w0JGMCAAAYBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAQCHsatRauG0AAAB4AAAACQAkAAAAAAAAAAAAAACwAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGgDAAAAAA==
+    dataString: UEsDBBQAAAgIAABAIezXmaKXXwIAABYFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty2zAM/BUPz3VGftVNb63iOD0k8cTt5KILQ0IWxxSp4SO2k/G/F6SeVU+isAtwF4D0SYSyFTCnzdYI/qg5kO8TEs7ky6QHH+BMD1rtxQe0nFfBXRFINHJeqBMa47OQZnUJzgj2Qx1kICcY9Erk2pQbfoBUW2cxnFNpASGjXchWGPqckDM+prch5YKn+TqcPvB0m0yueGSgHJieOkvWDXV1s2qoNdMrJmlZAQ+y+4T5squ9iDyFjhpKUM+0lMI2coi7VNFuSivr0QwSuKBoL2pY4GsB4lC4UG6Y/JznFlzj3dDLnTDYpboq+anr1pXUHmth71R66JTXJR//Q6ezCOdGlw/trbMk3OAKwY4v9MKodYPODsN3vexZ7M6JyiN9k/BagHrSW6O94gg640OqtzC/6187Y2kB7NjHa6mjoK/6drfNbscYPFyj93MqRfkWoJtlHdhLHbsdpw8G5/ILBcfdsE0JjAYVfyz8pofhEjXAvTDWIdS4VEHem/YmUMkm9iy48S7VRkEMN6IrUFS6yw7LuPEAR9jg2hFyT8Pn0lzeYO1XMEqJ4Z6fJCNop0/dsGyhT49gi2fvpFDDYgF5wkalWql6wewIDXl7b3LKoDd78IL/u1tkARzYPFlStoJkvVxPF4zl3+h8+TUHyFe3lMTlEwqNUrmrlTb9wbGpvrjCRWt/I5OtoVVcdm7oaSs+Sj3ouVC53jMDoJ7rCp1wMHgJfpR8wwV2aA/OCRUHTj4zIjU7As+6Qll0ujk7Q7O+SkYq8a5diGQkjf+NjIRwt8w7A+8CTuHyttiVXP8CUEsDBBQAAAgIAABAIexq1Fq4bQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrSScWpKarKRgUlismmqgbmJua5xcnKaRaKRiVlaamqaqWWiUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAABAIezXmaKXXwIAABYFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAABAIexq1Fq4bQAAAHgAAAAJACQAAAAAAAAAAAAAAKwCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAZAMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
