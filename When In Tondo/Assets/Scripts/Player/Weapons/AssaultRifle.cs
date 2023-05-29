@@ -41,9 +41,14 @@ public class AssaultRifle : MonoBehaviour
 
     private void Update()
     {
+        isInMeleeRange = Physics2D.OverlapCircle(this.transform.position, playerMeleeRange, enemyLayerMask);
         if (Input.GetButton("Fire1") && Time.time > nextFireTime && currentAmmo > 0)
         {
             Fire();
+            if (isInMeleeRange)
+            {
+                MeleeAttack();
+            }
         }
 
         if (currentAmmo == 0)
@@ -72,11 +77,6 @@ public class AssaultRifle : MonoBehaviour
 
     private void Fire()
     {
-        isInMeleeRange = Physics2D.OverlapCircle(transform.position, playerMeleeRange, enemyLayerMask);
-        if (isInMeleeRange)
-        {
-            MeleeAttack();
-        }
         nextFireTime = Time.time + fireRate;
         currentAmmo--;
 
@@ -155,6 +155,12 @@ public class AssaultRifle : MonoBehaviour
     private IEnumerator DelayBulletInstantiate()
     {
         yield return new WaitForSeconds(bulletDelay);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(this.transform.position, playerMeleeRange);
     }
 
     IEnumerator ResetStab()

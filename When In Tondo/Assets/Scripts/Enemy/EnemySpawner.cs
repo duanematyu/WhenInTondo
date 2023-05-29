@@ -4,51 +4,44 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject spawnerPrefab;
+    public GameObject[] activeMonsters;
+    public List<GameObject> monsterPrefabs;
+    public float spawnTime = 3f;
+    public float spawnInterval = 2f;
 
-    [SerializeField]
-    private float spawnInterval = 3.5f;
+    public int maxSpawnCount = 5;
 
-    public float enemyCount;
-    public float spawnTime;
-    public bool canSpawn;
+    public Transform spawnPosition;
+    private int spawnCount = 0;
 
-    //public BoxCollider2D box;
-    // Start is called before the first frame update
-    void Start()
+    public bool canSpawn = true;
+
+
+    private void Start()
     {
-        Invoke("SpawnEnemy", 0.5f);
+        InvokeRepeating("SpawnEnemy", 2f, 1.5f);
+    }
+    void Update()
+    {
+        activeMonsters = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
-    private void Update()
-    {
-        if(canSpawn)
-        {
-            spawnTime -= Time.deltaTime;
-            if(spawnTime < 0)
-            {
-                canSpawn = false;
-            }
 
-        }
-
-        /*if (enemyCount == 0)
-        {
-            box.enabled = false;
-        }*/
-        
-    }
 
 
     void SpawnEnemy()
     {
-        if (enemyCount != 0)
+        if (spawnCount < maxSpawnCount)
         {
-            GameObject newEnemy = Instantiate(spawnerPrefab, gameObject.transform.position, Quaternion.identity);
-            enemyCount--;
+            Instantiate(monsterPrefabs[UnityEngine.Random.Range(0, monsterPrefabs.Count)], spawnPosition.position, Quaternion.identity);
+            spawnCount++;
         }
-
-        Invoke("SpawnEnemy", spawnInterval);
     }
+
+    public void OnDeath()
+    {
+        //Invoke("SpawnEnemy", spawnTime);
+        spawnCount--;
+    }
+
 }

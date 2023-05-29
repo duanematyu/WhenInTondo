@@ -6,6 +6,7 @@ public class RangedEnemy : EnemyStats
 {
     public Transform firePoint;
     public GameObject bullet;
+    public GameObject spawner;
     float timeBetween;
     public float startTimeBetween;
     public float retreatDistance;
@@ -15,12 +16,14 @@ public class RangedEnemy : EnemyStats
     public SpriteRenderer renderer;
 
     EnemyController enemyController;
-
+    EnemySpawner enemySpawner;
     PlayerHealth playerHealth;
     Transform player;
     // Start is called before the first frame update
     void Start()
     {
+        spawner = GameObject.FindWithTag("Spawner");
+        enemySpawner = spawner.GetComponent<EnemySpawner>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerHealth = player.GetComponent<PlayerHealth>();
         enemyController = GetComponentInChildren<EnemyController>();
@@ -91,6 +94,7 @@ public class RangedEnemy : EnemyStats
 
     private void Death()
     {
+        enemySpawner.OnDeath();
         Destroy(gameObject);
     }
 }

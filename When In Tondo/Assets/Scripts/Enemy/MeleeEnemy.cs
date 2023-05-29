@@ -14,10 +14,13 @@ public class MeleeEnemy : EnemyStats
     public bool facingRight = false;
     public Animator meleeEnemyAnim;
 
+    public GameObject spawner;
+
     public Rigidbody2D rb;
 
     PlayerHealth playerHealth;
     PlayerMovement playerMovement;
+    EnemySpawner enemySpawner;
 
     private float canAttack = 0f;
     private float attackSpeed = .5f;
@@ -26,6 +29,8 @@ public class MeleeEnemy : EnemyStats
     // Start is called before the first frame update
     void Start()
     {
+        spawner = GameObject.FindWithTag("Spawner");
+        enemySpawner = spawner.GetComponent<EnemySpawner>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         renderer = GetComponent<SpriteRenderer>();
         playerHealth = player.GetComponent<PlayerHealth>();
@@ -132,6 +137,7 @@ public class MeleeEnemy : EnemyStats
 
     private void Death()
     {
+        enemySpawner.OnDeath();
         Destroy(gameObject);
     }
 

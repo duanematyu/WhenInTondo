@@ -44,7 +44,7 @@ public class WeaponController : MonoBehaviour
             aimDirection.y = 0f;
         }*/
 
-        isInMeleeRange = Physics2D.OverlapCircle(transform.position, playerMeleeRange, enemyLayerMask);
+        isInMeleeRange = Physics2D.OverlapCircle(this.transform.position, playerMeleeRange, enemyLayerMask);
         if (Input.GetButtonDown("Fire1"))
         {
             shotCounter -= Time.deltaTime;
