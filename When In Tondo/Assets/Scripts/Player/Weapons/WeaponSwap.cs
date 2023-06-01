@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class WeaponSwap : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class WeaponSwap : MonoBehaviour
     public GameObject activeWeapon;
     public GameObject pistol;
     public int plusAmmo;
+
+    public TextMeshProUGUI ammoCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +24,7 @@ public class WeaponSwap : MonoBehaviour
     {
         var weapon = Instantiate(pistol, weaponSlot.transform.position, weaponSlot.transform.rotation);
         weapon.transform.parent = weaponSlot.transform;
+        ammoCount.text = "-";
     }
 
     public void UpdateWeapon(GameObject newWeapon)

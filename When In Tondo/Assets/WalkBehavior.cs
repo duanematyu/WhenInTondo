@@ -7,41 +7,47 @@ public class WalkBehavior : StateMachineBehaviour
     public float timer;
     public float minTime;
     public float maxTime;
-    public float speed;
-    private int rand;
+    public float speed = 2.5f;
+    public float attackRange;
+    public float shotCounter;
+    public float fireRate;
+
+    Boss boss;
+    BossShooting bossShooting;
 
     private Transform playerPos;
+    Rigidbody2D rb;
 
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        rand = Random.Range(0, 3);
+        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = animator.GetComponent<Rigidbody2D>();
+        boss = animator.GetComponent<Boss>();
+        bossShooting = animator.GetComponent<BossShooting>();
         timer = Random.Range(minTime, maxTime);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (timer <= 0 && rand == 0)
-        {
-            animator.SetTrigger("idle");
-        }
+        boss.LookAtPlayer();
 
-        else if (timer <= 0 && rand == 1)
+        Vector2 target = new Vector2(playerPos.position.x, rb.position.y);
+        Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
+        rb.MovePosition(newPos);
+
+        if(Vector2.Distance(playerPos.position, rb.position) <= attackRange && Time.time > shotCounter)
         {
+            shotCounter = Time.time + fireRate;
+            bossShooting.Shoot();
             animator.SetTrigger("shoot");
         }
-        else if (timer <= 0 && rand == 2)
-        {
-            animator.SetTrigger("walk");
-        }
-        else
-        {
-            timer -= Time.deltaTime;
-        }
+    }
 
-        //Vector2 target = new Vector2(playerPos.position.x, animator.transform.position.y);
-        //animator.transform.position = Vector2.MoveTowards(animator.transform.position, target, speed * Time.deltaTime);
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.ResetTrigger("shoot");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

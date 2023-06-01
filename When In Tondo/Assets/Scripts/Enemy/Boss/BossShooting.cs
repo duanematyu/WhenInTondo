@@ -7,6 +7,9 @@ public class BossShooting : MonoBehaviour
     public GameObject bullet;
     public Transform bulletPos;
 
+    public float shotCounter;
+    public float fireRate;
+
     private float timer;
     // Start is called before the first frame update
     void Start()
@@ -17,16 +20,15 @@ public class BossShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > 3)
-        {
-            timer = 0;
-            Shoot();
-        }
+  
     }
 
-    void Shoot()
+   public void Shoot()
     {
+        /*if (Time.time > shotCounter)
+        {
+            
+        }*/
         Instantiate(bullet, bulletPos.position, Quaternion.identity);
     }
 }

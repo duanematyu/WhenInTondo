@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4180507919478870271}
   - component: {fileID: 6698238075048942181}
   - component: {fileID: 5186095548037742404}
-  - component: {fileID: 8230176372217905734}
   - component: {fileID: 2769968940045603196}
-  m_Layer: 0
+  - component: {fileID: -7291484348550471648}
+  m_Layer: 9
   m_Name: boss bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2488790611268601969}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -108,20 +108,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8230176372217905734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2488790611268601969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1b71e541909bb42a7b26aaad556e55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpeed: 100
-  damage: 25
 --- !u!61 &2769968940045603196
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,3 +134,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.30611986, y: 0.1875}
   m_EdgeRadius: 0
+--- !u!114 &-7291484348550471648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2488790611268601969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e4278d4636e81409461bd2f052dd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  degrees: 0
+  force: 5
+  bulletDamage: 100

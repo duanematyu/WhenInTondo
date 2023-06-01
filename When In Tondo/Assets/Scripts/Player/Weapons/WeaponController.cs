@@ -148,7 +148,6 @@ public class WeaponController : MonoBehaviour
         StartCoroutine(ResetStab());
         Debug.Log("Player Attack");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleePoint.transform.position, playerMeleeRange, enemyLayerMask);
-
         foreach(Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<EnemyStats>().TakeDamage(playerDamage);

@@ -15,6 +15,7 @@ TagManager:
   - Jumpable
   - HigherJumpable
   - Spawner
+  - BossHealth
   layers:
   - Default
   - TransparentFX

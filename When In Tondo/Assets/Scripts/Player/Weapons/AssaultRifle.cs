@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class AssaultRifle : MonoBehaviour
 {
@@ -28,12 +30,15 @@ public class AssaultRifle : MonoBehaviour
     public Animator playerAnim;
 
     WeaponSwap weaponSwap;
+    AmmoCountUI ammoCountUI;
 
     private void Start()
     {
         weaponSwap = GetComponentInParent<WeaponSwap>();
+        ammoCountUI = GetComponentInParent<AmmoCountUI>();
         playerAnim = GetComponentInParent<Animator>();
         currentAmmo = maxAmmo;
+        ammoCountUI.AmmoCountUpdate(currentAmmo);
         playerMovement = GetComponentInParent<PlayerMovement>();
         meleePoint = GameObject.FindGameObjectWithTag("MeleePoint");
         ChangeWeapon();
@@ -79,6 +84,7 @@ public class AssaultRifle : MonoBehaviour
     {
         nextFireTime = Time.time + fireRate;
         currentAmmo--;
+        ammoCountUI.AmmoCountUpdate(currentAmmo);
 
         int playerDir()
         {

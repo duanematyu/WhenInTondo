@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7420541538076778581}
   - component: {fileID: 7420541538076778580}
   - component: {fileID: 7420541538076778587}
+  - component: {fileID: -6122468834330236115}
   m_Layer: 11
   m_Name: Boss
   m_TagString: Boss
@@ -30,8 +31,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7420541538076778578}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 145.6, y: -0.83, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 145.1535, y: -1.255, z: 0}
+  m_LocalScale: {x: 1.3196, y: 1.3524, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7420541539330051789}
@@ -156,7 +157,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &7420541538076778580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb40cf4e1af54df49a84ce8aad1d31d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  player: {fileID: 0}
+  damage: 100
+  isFlipped: 0
 --- !u!114 &7420541538076778587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,8 +185,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef4f07c88ab45d43a194e870a139503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 3784640510425665803, guid: 67e8c46703cc91f4d95c1dd35ceddb78, type: 3}
+  bullet: {fileID: 6489944856967714830, guid: 29af825845278e54ba540c2663a04ffe, type: 3}
   bulletPos: {fileID: 7420541539330051789}
+  shotCounter: 5
+  fireRate: 5
+--- !u!114 &-6122468834330236115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7420541538076778578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f01fcde1f2a7d14f94af6dfa9a0e68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 500
+  currentHealth: 0
+  waitTime: 2
+  HealthSlider: {fileID: 0}
+  healthBar: {fileID: 0}
+  boss: {fileID: 0}
+  isDead: 0
 --- !u!1 &7420541539330051790
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +232,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7420541539330051790}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.54, y: -0.27, z: 0}
+  m_LocalPosition: {x: 0.572, y: -0.087, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
