@@ -18,6 +18,10 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    public int lives =3;
+
+    Vector2 startPos;
+
     [Header ("IFrames")]
     [SerializeField] private float iFramesDuration;
     [SerializeField] private int numberOfFlashes;
@@ -37,6 +41,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         spriteRend = GetComponent<SpriteRenderer>();
+        startPos = transform.position;
         //player = gameObject.GetComponent<PlayerScript>();
     }
 
@@ -71,10 +76,21 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         //animator.SetBool("isDead", true);
+        lives--;
+        if(lives == 0)
+        {
+          player.SetActive(false);
+        }
         isDead = true;
-        currentHealth = 0;
-        player.SetActive(false);
+        currentHealth = maxHealth;
+        Respawn();
+
         //Destroy(gameObject);
+    }
+
+    public void Respawn()
+    {
+        transform.position = startPos;
     }
 
     private IEnumerator Invulnerability()

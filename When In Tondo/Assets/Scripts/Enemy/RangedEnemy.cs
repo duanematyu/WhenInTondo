@@ -51,6 +51,11 @@ public class RangedEnemy : EnemyStats
             }
         }
 
+        else
+        {
+            this.gameObject.GetComponent<RangedEnemy>().enabled = false;
+        }
+
         if (player.position.x < transform.position.x)
         {
             renderer.flipX = true;

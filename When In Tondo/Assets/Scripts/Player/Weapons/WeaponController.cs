@@ -12,7 +12,6 @@ public class WeaponController : MonoBehaviour
     public GameObject bomb;
     public Transform weapon;
     public Transform throwPoint;
-    Vector2 aimDirection;
 
     public float fireRate, shotCounter, throwSpeed, shotSpeed, throwCounter, force, molotovCount, currentMolotovCount;
     public bool isFiring, isThrowing;
@@ -31,19 +30,11 @@ public class WeaponController : MonoBehaviour
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAnim = GetComponentInParent<Animator>();
         meleePoint = GameObject.FindGameObjectWithTag("MeleePoint");
-        //molotovAmmo = GameObject.FindGameObjectWithTag("MolotovText");
-        //enemyStats = enemy.GetComponent<EnemyStats>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       /* aimDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        if (playerMovement.isCrouching && playerMovement.isGrounded)
-        {
-            aimDirection.y = 0f;
-        }*/
-
         isInMeleeRange = Physics2D.OverlapCircle(this.transform.position, playerMeleeRange, enemyLayerMask);
         if (Input.GetButtonDown("Fire1"))
         {
@@ -65,33 +56,10 @@ public class WeaponController : MonoBehaviour
         {
             shotCounter = 0;
         }
-        
-       /* if(Input.GetKeyDown(KeyCode.C))
-        {
-            ChangeWeapon();
-        }*/
-
-        /*if(Input.GetButtonDown("Fire2"))
-        {
-           for(int i = 0; i < molotovCount; i++)
-           {
-             Instantiate(grenadeController, throwPoint.position, transform.rotation);
-             molotovCount--;
-           }
-        } */  
     }
 
     void Shoot()
     {
-        /* // Calculate the angle of the aim direction in radians
-         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x);
-
-         // Instantiate a bullet prefab and set its position to the bullet spawn point
-         GameObject bullet = Instantiate(ammoType, firePoint.position, Quaternion.identity);
-
-         // Set the bullet's velocity based on the aim direction
-         bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(shotSpeed * Mathf.Cos(angle), shotSpeed * Mathf.Sin(angle));*/
-
         int playerDir()
         {
             if (transform.parent.localScale.x < 0f)

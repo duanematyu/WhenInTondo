@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBullet : MonoBehaviour
+public class BossBullet : EnemyStats
 {
-    private GameObject player;
+    private Transform player;
     private Rigidbody2D rb;
     public float degrees;
     public float force;
-    public float bulletDamage;
 
     PlayerHealth playerHealth;
     PlayerMovement playerMovement;
@@ -16,7 +15,7 @@ public class BossBullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerHealth = player.GetComponent<PlayerHealth>();
         playerMovement = player.GetComponent<PlayerMovement>();
 
@@ -30,7 +29,10 @@ public class BossBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (player == null)
+        {
+            this.gameObject.GetComponent<BossBullet>().enabled = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -40,7 +42,8 @@ public class BossBullet : MonoBehaviour
         {
             if (collision.tag == "Player" && !playerHealth.isInvulnerable && !playerMovement.isInvulnerable)
             {
-                playerHealth.TakeDamage(bulletDamage);
+                playerHealth.TakeDamage(baseAttack);
+                Debug.Log("Hit player");
                 Destroy(gameObject);
             }
 

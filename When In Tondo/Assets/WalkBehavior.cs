@@ -9,8 +9,6 @@ public class WalkBehavior : StateMachineBehaviour
     public float maxTime;
     public float speed = 2.5f;
     public float attackRange;
-    public float shotCounter;
-    public float fireRate;
 
     Boss boss;
     BossShooting bossShooting;
@@ -25,21 +23,22 @@ public class WalkBehavior : StateMachineBehaviour
         rb = animator.GetComponent<Rigidbody2D>();
         boss = animator.GetComponent<Boss>();
         bossShooting = animator.GetComponent<BossShooting>();
-        timer = Random.Range(minTime, maxTime);
+       
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        timer += Time.deltaTime;
         boss.LookAtPlayer();
 
         Vector2 target = new Vector2(playerPos.position.x, rb.position.y);
         Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
         rb.MovePosition(newPos);
 
-        if(Vector2.Distance(playerPos.position, rb.position) <= attackRange && Time.time > shotCounter)
+        if(Vector2.Distance(playerPos.position, rb.position) <= attackRange && timer > 1)
         {
-            shotCounter = Time.time + fireRate;
+            timer = 0;
             bossShooting.Shoot();
             animator.SetTrigger("shoot");
         }

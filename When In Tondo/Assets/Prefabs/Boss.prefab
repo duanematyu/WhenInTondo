@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef4f07c88ab45d43a194e870a139503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 6489944856967714830, guid: 29af825845278e54ba540c2663a04ffe, type: 3}
+  bullet: {fileID: 6489944856967714830, guid: ac434dcec932d7645931bb7ecf0dc6e2, type: 3}
   bulletPos: {fileID: 7420541539330051789}
   shotCounter: 5
   fireRate: 5
@@ -207,6 +207,7 @@ MonoBehaviour:
   HealthSlider: {fileID: 0}
   healthBar: {fileID: 0}
   boss: {fileID: 0}
+  slider: {fileID: 0}
   isDead: 0
 --- !u!1 &7420541539330051790
 GameObject:
