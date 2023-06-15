@@ -138,5 +138,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   enemyName: 
-  baseAttack: 150
-  speed: 5
+  baseAttack: 50
+  speed: 10

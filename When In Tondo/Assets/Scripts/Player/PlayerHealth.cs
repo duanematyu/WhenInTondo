@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    public TextMeshProUGUI livesText;
+
     public int lives =3;
 
     Vector2 startPos;
@@ -29,10 +32,6 @@ public class PlayerHealth : MonoBehaviour
     public bool isInvulnerable;
 
     public GameObject player;
-
-    //public GameObject GameOverScreen;
-    //public GameObject HealthHud;
-
     public bool isDead = false;
 
     // Start is called before the first frame update
@@ -41,26 +40,21 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         spriteRend = GetComponent<SpriteRenderer>();
-        startPos = transform.position;
-        //player = gameObject.GetComponent<PlayerScript>();
+        livesText.text = "x" + lives.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+        startPos = transform.position + new Vector3(0,1f,0);
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && lives > 0)
         {
             Die();
-            //animator.SetTrigger("isDead");
-            //GameOverScreen.SetActive(true);
-            //HealthHud.SetActive(false);
-            //player.enabled = false;
-            //gunScript.enabled = false;
         }
 
         HealthSlider.value = currentHealth;
@@ -68,29 +62,29 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        //animator.SetTrigger("isHurt");
         currentHealth -= amount;
         StartCoroutine(Invulnerability());
     }
 
     public void Die()
     {
-        //animator.SetBool("isDead", true);
         lives--;
+        livesText.text = "x" + lives.ToString();
         if(lives == 0)
         {
-          player.SetActive(false);
+            isDead = true;
+            animator.SetTrigger("StabDeath");
+            Invoke("SuspendPlayer", 1);
         }
-        isDead = true;
         currentHealth = maxHealth;
-        Respawn();
-
-        //Destroy(gameObject);
+        StartCoroutine(Respawn());
     }
 
-    public void Respawn()
+    private IEnumerator Respawn()
     {
+        StartCoroutine(Invulnerability());
         transform.position = startPos;
+        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator Invulnerability()
@@ -108,4 +102,11 @@ public class PlayerHealth : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 9, false);
         isInvulnerable = false;
     }
+
+    void SuspendPlayer()
+    {
+        player.SetActive(false);
+        Destroy(player);
+    }
+
 }

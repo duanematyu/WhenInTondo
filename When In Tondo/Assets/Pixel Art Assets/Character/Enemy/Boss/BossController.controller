@@ -116,9 +116,7 @@ MonoBehaviour:
   minTime: 2
   maxTime: 5
   speed: 4
-  attackRange: 5
-  shotCounter: 3
-  fireRate: 3
+  attackRange: 4
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0

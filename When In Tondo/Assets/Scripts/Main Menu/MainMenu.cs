@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject[] activeGameObject;
+    public GameObject controls;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,18 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        foreach(GameObject gameObj in activeGameObject)
+        {
+            gameObj.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
+        FindObjectOfType<AudioManager>().Play("BGM");
+    }
+
+    public void HowToPlay()
+    {
+        controls.SetActive(true);
     }
 
     public void QuitGame()

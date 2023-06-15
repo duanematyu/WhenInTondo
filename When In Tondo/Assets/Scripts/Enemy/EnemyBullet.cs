@@ -22,7 +22,7 @@ public class EnemyBullet : EnemyStats
     // Update is called once per frame
     void Update()
     {
-        if(player == null)
+        if(playerHealth.isDead == true)
         {
             this.gameObject.GetComponent<EnemyBullet>().enabled = false;
         }

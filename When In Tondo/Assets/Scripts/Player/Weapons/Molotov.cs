@@ -9,10 +9,13 @@ public class Molotov: MonoBehaviour
     public GrenadeController grenadeController;
     public Transform throwPoint;
     public TextMeshProUGUI molotovCountText;
+    public Animator playerAnim;
+    PauseScreen pauseScreen;
 
     // Start is called before the first frame update
     void Start()
     {
+        pauseScreen = GetComponent<PauseScreen>();
         molotovCountText.text = molotovCount.ToString();
     }
 
@@ -21,8 +24,9 @@ public class Molotov: MonoBehaviour
     {
       if(Input.GetButtonDown("Fire2"))
         {
-           if(molotovCount > 0)
+           if(molotovCount > 0 && pauseScreen.isPaused == false)
            {
+                playerAnim.SetTrigger("throw");
                 Instantiate(grenadeController, throwPoint.position, transform.rotation);
                 molotovCount--;
                 molotovCountText.text = molotovCount.ToString();

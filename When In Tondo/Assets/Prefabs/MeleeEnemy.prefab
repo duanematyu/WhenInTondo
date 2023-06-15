@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 246820477}
   m_Layer: 6
   m_Name: MeleeEnemy
-  m_TagString: Enemy
+  m_TagString: MeleeEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   renderer: {fileID: 7768551068239424594}
   facingRight: 0
   meleeEnemyAnim: {fileID: 246820477}
+  spawner: {fileID: 0}
   rb: {fileID: 1193292594004883780}
   playerLayerMask:
     serializedVersion: 2

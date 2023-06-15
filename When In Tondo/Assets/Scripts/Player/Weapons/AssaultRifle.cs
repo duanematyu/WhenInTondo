@@ -8,6 +8,7 @@ public class AssaultRifle : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public GameObject meleePoint;
+    public GameObject pauseScreenObj;
     public Transform barrelTransform;
     public Transform barrelTransformUp;
     public float fireRate = 0.2f;
@@ -31,9 +32,12 @@ public class AssaultRifle : MonoBehaviour
 
     WeaponSwap weaponSwap;
     AmmoCountUI ammoCountUI;
+    PauseScreen pauseScreen;
 
     private void Start()
     {
+        pauseScreenObj = GameObject.FindGameObjectWithTag("PauseScreen");
+        pauseScreen = pauseScreenObj.GetComponent<PauseScreen>();
         weaponSwap = GetComponentInParent<WeaponSwap>();
         ammoCountUI = GetComponentInParent<AmmoCountUI>();
         playerAnim = GetComponentInParent<Animator>();
@@ -82,67 +86,70 @@ public class AssaultRifle : MonoBehaviour
 
     private void Fire()
     {
-        nextFireTime = Time.time + fireRate;
-        currentAmmo--;
-        ammoCountUI.AmmoCountUpdate(currentAmmo);
-
-        int playerDir()
+        if (!pauseScreen.isPaused)
         {
-            if (transform.parent.localScale.x < 0f)
+            nextFireTime = Time.time + fireRate;
+            currentAmmo--;
+            ammoCountUI.AmmoCountUpdate(currentAmmo);
+
+            int playerDir()
             {
-                return -1;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        for (int i = 0; i < bulletsPerShot; i++)
-        {
-            float angle = -1f + i * 7f / (bulletsPerShot - 1);
-            Vector2 horizontalDirection = Quaternion.Euler(0f, 0f, angle) * barrelTransform.right;
-            Vector2 verticalDirection = Quaternion.Euler(0f, 0f, angle) * barrelTransformUp.up;
-
-            //shotRb.AddForce(direction * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
-
-            if (playerMovement.isLookingStraight && !playerMovement.isCrouching)
-            {
-                GameObject shot = Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity);
-                Bullet bullet = shot.GetComponent<Bullet>();
-                Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
-
-                shotRb.velocity = transform.right * fireRate;
-                shotRb.AddForce(horizontalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
+                if (transform.parent.localScale.x < 0f)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
             }
 
-            if (playerMovement.isCrouching && playerMovement.isGrounded)
+            for (int i = 0; i < bulletsPerShot; i++)
             {
-                GameObject shot = Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity);
-                Bullet bullet = shot.GetComponent<Bullet>();
-                Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
+                float angle = -1f + i * 7f / (bulletsPerShot - 1);
+                Vector2 horizontalDirection = Quaternion.Euler(0f, 0f, angle) * barrelTransform.right;
+                Vector2 verticalDirection = Quaternion.Euler(0f, 0f, angle) * barrelTransformUp.up;
 
-                shotRb.AddForce(horizontalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
+                //shotRb.AddForce(direction * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
+
+                if (playerMovement.isLookingStraight && !playerMovement.isCrouching)
+                {
+                    GameObject shot = Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity);
+                    Bullet bullet = shot.GetComponent<Bullet>();
+                    Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
+                    FindObjectOfType<AudioManager>().Play("AssaultRifleShoot");
+                    shotRb.velocity = transform.right * fireRate;
+                    shotRb.AddForce(horizontalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
+                }
+
+                if (playerMovement.isCrouching && playerMovement.isGrounded)
+                {
+                    GameObject shot = Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity);
+                    Bullet bullet = shot.GetComponent<Bullet>();
+                    Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
+                    FindObjectOfType<AudioManager>().Play("AssaultRifleShoot");
+                    shotRb.AddForce(horizontalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
+                }
+
+                if (playerMovement.isLookingUp)
+                {
+                    GameObject shotUp = Instantiate(bulletPrefab, barrelTransformUp.position, Quaternion.identity);
+                    Bullet bullet = shotUp.GetComponent<Bullet>();
+                    Rigidbody2D shotRbUp = shotUp.GetComponent<Rigidbody2D>();
+                    FindObjectOfType<AudioManager>().Play("AssaultRifleShoot");
+                    shotRbUp.AddForce(verticalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
+                }
+
+                if (playerMovement.isLookingDown && !playerMovement.isGrounded)
+                {
+                    GameObject shotUp = Instantiate(bulletPrefab, barrelTransformUp.position, Quaternion.identity);
+                    Rigidbody2D shotRbUp = shotUp.GetComponent<Rigidbody2D>();
+                    Bullet bullet = shotUp.GetComponent<Bullet>();
+                    FindObjectOfType<AudioManager>().Play("AssaultRifleShoot");
+                    shotRbUp.AddForce(-verticalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
+                }
+                StartCoroutine(DelayBulletInstantiate());
             }
-
-            if (playerMovement.isLookingUp)
-            {
-                GameObject shotUp = Instantiate(bulletPrefab, barrelTransformUp.position, Quaternion.identity);
-                Bullet bullet = shotUp.GetComponent<Bullet>();
-                Rigidbody2D shotRbUp = shotUp.GetComponent<Rigidbody2D>();
-
-                shotRbUp.AddForce(verticalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
-            }
-
-            if (playerMovement.isLookingDown && !playerMovement.isGrounded)
-            {
-                GameObject shotUp = Instantiate(bulletPrefab, barrelTransformUp.position, Quaternion.identity);
-                Rigidbody2D shotRbUp = shotUp.GetComponent<Rigidbody2D>();
-                Bullet bullet = shotUp.GetComponent<Bullet>();
-
-                shotRbUp.AddForce(-verticalDirection * bullet.bulletSpeed * playerDir(), ForceMode2D.Impulse);
-            }
-            StartCoroutine(DelayBulletInstantiate());
         }
     }
 
@@ -155,6 +162,7 @@ public class AssaultRifle : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
+            FindObjectOfType<AudioManager>().Play("PlayerStab");
             enemy.GetComponent<EnemyStats>().TakeDamage(playerDamage);
         }
     }

@@ -21,6 +21,14 @@ public class GroundFireDamage : MonoBehaviour
     {
         GameObject collisionGameObject = collision.gameObject;
 
+        if (collision.gameObject.CompareTag("MeleeEnemy"))
+        {
+            if (collisionGameObject.GetComponent<EnemyStats>() != null)
+            {
+                collisionGameObject.GetComponent<EnemyStats>().TakeDamage(damage);
+            }
+        }
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (collisionGameObject.GetComponent<EnemyStats>() != null)

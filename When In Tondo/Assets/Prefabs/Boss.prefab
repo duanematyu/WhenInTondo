@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  damage: 100
+  damage: 50
   isFlipped: 0
 --- !u!114 &7420541538076778587
 MonoBehaviour:
@@ -188,7 +188,7 @@ MonoBehaviour:
   bullet: {fileID: 6489944856967714830, guid: ac434dcec932d7645931bb7ecf0dc6e2, type: 3}
   bulletPos: {fileID: 7420541539330051789}
   shotCounter: 5
-  fireRate: 5
+  fireRate: 3
 --- !u!114 &-6122468834330236115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f01fcde1f2a7d14f94af6dfa9a0e68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
+  maxHealth: 1500
   currentHealth: 0
   waitTime: 2
   HealthSlider: {fileID: 0}

@@ -10,6 +10,7 @@ public class WeaponController : MonoBehaviour
     public GameObject meleePoint;
     public GameObject ammoType;
     public GameObject bomb;
+    public GameObject pauseScreenObj;
     public Transform weapon;
     public Transform throwPoint;
 
@@ -20,6 +21,7 @@ public class WeaponController : MonoBehaviour
     public LayerMask enemyLayerMask;
     public Animator playerAnim;
     PlayerMovement playerMovement;
+    PauseScreen pauseScreen;
     public GrenadeController grenadeController;
     public int playerDamage;
     public int currentWeaponNum = 0;
@@ -27,6 +29,8 @@ public class WeaponController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pauseScreenObj = GameObject.FindGameObjectWithTag("PauseScreen");
+        pauseScreen = pauseScreenObj.GetComponent<PauseScreen>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerAnim = GetComponentInParent<Animator>();
         meleePoint = GameObject.FindGameObjectWithTag("MeleePoint");
@@ -35,27 +39,30 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isInMeleeRange = Physics2D.OverlapCircle(this.transform.position, playerMeleeRange, enemyLayerMask);
-        if (Input.GetButtonDown("Fire1"))
+        if(!pauseScreen.isPaused)
         {
-            shotCounter -= Time.deltaTime;
-            if (isInMeleeRange)
+            isInMeleeRange = Physics2D.OverlapCircle(this.transform.position, playerMeleeRange, enemyLayerMask);
+            if (Input.GetButtonDown("Fire1"))
             {
-                MeleeAttack();
-            }
+                shotCounter -= Time.deltaTime;
+                if (isInMeleeRange)
+                {
+                    MeleeAttack();
+                }
 
-           else if (shotCounter <= 0)
-            {
-                shotCounter = fireRate;
-                Shoot();
-                isFiring = true;
+                else if (shotCounter <= 0)
+                {
+                    shotCounter = fireRate;
+                    Shoot();
+                    isFiring = true;
+                }
+                isFiring = false;
             }
-            isFiring = false;
-        }
-        else
-        {
-            shotCounter = 0;
-        }
+            else
+            {
+                shotCounter = 0;
+            }
+        }    
     }
 
     void Shoot()
@@ -71,6 +78,7 @@ public class WeaponController : MonoBehaviour
                 return 1;
             }
         }
+        FindObjectOfType<AudioManager>().Play("PistolShoot");
         GameObject shot = Instantiate(ammoType, firePoint.position, Quaternion.identity);
         Rigidbody2D shotRb = shot.GetComponent<Rigidbody2D>();
      
@@ -118,6 +126,7 @@ public class WeaponController : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(meleePoint.transform.position, playerMeleeRange, enemyLayerMask);
         foreach(Collider2D enemy in hitEnemies)
         {
+            FindObjectOfType<AudioManager>().Play("PlayerStab");
             enemy.GetComponent<EnemyStats>().TakeDamage(playerDamage);
         }
     }

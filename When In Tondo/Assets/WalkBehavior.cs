@@ -36,7 +36,7 @@ public class WalkBehavior : StateMachineBehaviour
         Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
         rb.MovePosition(newPos);
 
-        if(Vector2.Distance(playerPos.position, rb.position) <= attackRange && timer > 1)
+        if(Vector2.Distance(playerPos.position, rb.position) <= attackRange && timer > .1f)
         {
             timer = 0;
             bossShooting.Shoot();

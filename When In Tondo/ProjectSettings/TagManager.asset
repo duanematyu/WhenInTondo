@@ -16,6 +16,8 @@ TagManager:
   - HigherJumpable
   - Spawner
   - BossHealth
+  - MeleeEnemy
+  - PauseScreen
   layers:
   - Default
   - TransparentFX

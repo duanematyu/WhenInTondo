@@ -111,10 +111,10 @@ public class MeleeEnemy : EnemyStats
 
     void Attack()
     {
-        Debug.Log("Attacking player");
         if(attackSpeed <= canAttack && !playerHealth.isInvulnerable && !playerMovement.isInvulnerable)
         {
             meleeEnemyAnim.SetTrigger("Stab");
+            FindObjectOfType<AudioManager>().Play("MananaksakStab");
             meleeEnemyAnim.ResetTrigger("Walk");
             StartCoroutine(ResetStab());
             playerHealth.TakeDamage(baseAttack);

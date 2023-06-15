@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (dashCoolCounter <= 0 && dashCounter <= 0)
             {
+                FindObjectOfType<AudioManager>().Play("RollOver");
+                playerAnim.SetTrigger("dash");
                 Physics2D.IgnoreLayerCollision(7, 9, true);
                 Physics2D.IgnoreLayerCollision(7, 11, true);
                 isInvulnerable = true;

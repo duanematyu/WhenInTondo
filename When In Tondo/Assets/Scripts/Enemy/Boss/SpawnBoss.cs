@@ -6,11 +6,12 @@ public class SpawnBoss : MonoBehaviour
 {
     public GameObject boss;
     public GameObject bossHealthBar;
+    public GameObject spawner;
     public Transform spawnPosition;
     // Start is called before the first frame update
     void Start()
     {
-        
+        //spawner.SetActive(false);
     }
 
     // Update is called once per frame
